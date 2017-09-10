@@ -2,6 +2,8 @@
 
 **A Jahnel Group sample project demonstrating session replication with Hazelcast.**
 
+![Architecture Diagram](http://stevenz.io/wp-content/uploads/2017/09/SpringBootHazelcastSessionReplication.jpeg)
+
 ## Getting Started
 
 Please read my blog post [Spring Boot Session Replication with Hazelcast](http://stevenz.io/spring-boot-session-replication-hazelcast-kotlin/) on [stevenz.io](http://stevenz.io) for an indepth guide through this sample.
