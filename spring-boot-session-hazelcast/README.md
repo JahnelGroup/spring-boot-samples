@@ -181,7 +181,7 @@ X-Frame-Options: DENY
 X-XSS-Protection: 1; mode=block
 
 {
-    "message": "You must be logged in to see this.",
+    "message": "You are logged in so you can see this.",
     "port": 9000,
     "sessionId": "5c6e3486-b8a1-4e71-84ab-e6766acfbb12",
     "user": "user"
@@ -201,7 +201,7 @@ X-Frame-Options: DENY
 X-XSS-Protection: 1; mode=block
 
 {
-    "message": "You must be logged in to see this.",
+    "message": "You are logged in so you can see this.",
     "port": 9001,
     "sessionId": "5c6e3486-b8a1-4e71-84ab-e6766acfbb12",
     "user": "user"
