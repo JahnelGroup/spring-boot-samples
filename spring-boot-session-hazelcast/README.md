@@ -45,15 +45,15 @@ Bring up the Docker instances with Docker Compose.
 
 ```bash
 $ docker-compose up -d
-Creating jgsession_haproxy_1
-Creating jgsession_prometheus_1
-Creating jgsession_grafana_1
+Creating springbootsessionhazelcast_haproxy_1
+Creating springbootsessionhazelcast_prometheus_1
+Creating springbootsessionhazelcast_grafana_1
 
 $ docker ps -a
 CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS               NAMES
-8d9095250780        grafana/grafana:4.4.3    "/run.sh"                11 seconds ago      Up 10 seconds                           jgsession_grafana_1
-25f9f39435aa        prom/prometheus:v1.7.1   "/bin/prometheus -..."   11 seconds ago      Up 10 seconds                           jgsession_prometheus_1
-e60a98b97336        haproxy:1.7              "/docker-entrypoin..."   11 seconds ago      Up 10 seconds                           jgsession_haproxy_1
+8d9095250780        grafana/grafana:4.4.3    "/run.sh"                11 seconds ago      Up 10 seconds                           springbootsessionhazelcast_grafana_1
+25f9f39435aa        prom/prometheus:v1.7.1   "/bin/prometheus -..."   11 seconds ago      Up 10 seconds                           springbootsessionhazelcast_prometheus_1
+e60a98b97336        haproxy:1.7              "/docker-entrypoin..."   11 seconds ago      Up 10 seconds                           springbootsessionhazelcast_haproxy_1
 
 ```
 
