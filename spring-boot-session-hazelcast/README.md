@@ -137,7 +137,7 @@ X-XSS-Protection: 1; mode=block
 This application has one user with **username = user** and **password = pass** so login and try again.
 
 ```bash
-$ http --form --session=me POST http://localhost:8080/login username=user password=pass
+$ http --form --session=s1 POST http://localhost:8080/login username=user password=pass
 HTTP/1.1 302 
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Content-Length: 0
@@ -151,7 +151,7 @@ X-Frame-Options: DENY
 X-XSS-Protection: 1; mode=block
 ```
 
-A couple things to notice about the request is that we're passing in *--form* because the default Spring Security end-point assumes the payload to be a form post. We're also using *--session* and specifying a unique key as *me* just so that HTTPie can keep track of the session for us and the method is *POST*.
+A couple things to notice about the request is that we're passing in *--form* because the default Spring Security end-point assumes the payload to be a form post. We're also using *--session* and specifying a unique key as *s1* just so that HTTPie can keep track of the session for us and the method is *POST*.
 
 The cool thing is that HTTPie handles arguments in a really slick way and when passed in like this it will automatically make a JSON payload for you like this:
 
@@ -167,7 +167,7 @@ Notice in the repsonse we're getting a **302** redirect to the location *http://
 Try hitting the protected end-point a couple of times.
 
 ```bash
-$ http --session=me http://localhost:8080/api/protected
+$ http --session=s1 http://localhost:8080/api/protected
 HTTP/1.1 200 
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Content-Type: application/json;charset=UTF-8
@@ -187,7 +187,7 @@ X-XSS-Protection: 1; mode=block
     "user": "user"
 }
 
-$ http --session=me http://localhost:8080/api/protected
+$ http --session=s1 http://localhost:8080/api/protected
 HTTP/1.1 200 
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Content-Type: application/json;charset=UTF-8
@@ -216,7 +216,7 @@ Notice that the session remains and now a username is returned (user) because yo
 Hit the logout end-point and you'll be logged out both servers.
 
 ```bash
-$ http --session=me http://localhost:8080/logout
+$ http --session=s1 http://localhost:8080/logout
 HTTP/1.1 302 
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Content-Length: 0
@@ -233,7 +233,7 @@ X-XSS-Protection: 1; mode=block
 Notice that you're redirect back to the login page, try to hit the protected end-point again. You're not logged in and your session has changed.
 
 ```bash
-$ http --session=me http://localhost:8080/api/protected
+$ http --session=s1 http://localhost:8080/api/protected
 HTTP/1.1 302 
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Content-Length: 0
