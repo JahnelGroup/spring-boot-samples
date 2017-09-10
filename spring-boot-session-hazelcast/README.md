@@ -4,7 +4,7 @@
 
 ## Getting Started
 
-Please read my blog post [Spring Boot Session Replication with Hazelcast](..) on [stevenz.io](http://stevenz.io) for an indepth guide through this sample.
+Please read my blog post [Spring Boot Session Replication with Hazelcast](http://stevez.io/spring-boot-session-replication-with-hazelcast-kotlin) on [stevenz.io](http://stevenz.io) for an indepth guide through this sample.
 
 This [Spring Boot](https://projects.spring.io/spring-boot/) application is written in [Kotlin](https://kotlinlang.org/) and demonstrates how to configure [Hazelcast](https://hazelcast.com/) for session replication via [Multicasting](https://en.wikipedia.org/wiki/Multicast). Provided is a [Docker Compose](https://docs.docker.com/compose/) file that will setup [HAProxy](http://www.haproxy.org/) for routing and a [Prometheus](https://prometheus.io/)/[Grafana](https://grafana.com/) stack for visualization.
 
