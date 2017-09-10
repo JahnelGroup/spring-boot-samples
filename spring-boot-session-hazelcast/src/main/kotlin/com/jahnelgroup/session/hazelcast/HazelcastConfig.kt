@@ -1,6 +1,7 @@
 package com.jahnelgroup.session.hazelcast
 
 import com.hazelcast.config.Config
+import com.hazelcast.config.EntryListenerConfig
 import com.hazelcast.config.MapAttributeConfig
 import com.hazelcast.config.MapIndexConfig
 import com.hazelcast.core.Hazelcast
@@ -24,6 +25,7 @@ class HazelcastConfig() {
         val config = Config()
 
         config.getMapConfig("spring:session:sessions")
+                .addEntryListenerConfig(EntryListenerConfig(SessionListener::class.java.name, true, false))
                 .addMapAttributeConfig(attributeConfig)
                 .addMapIndexConfig(MapIndexConfig(
                         HazelcastSessionRepository.PRINCIPAL_NAME_ATTRIBUTE, false))

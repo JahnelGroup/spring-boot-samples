@@ -14,7 +14,7 @@ class WebSecurityConfig() : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
             .authorizeRequests()
-                .antMatchers("/prometheus/**").permitAll()
+                .antMatchers("/manage/**").permitAll()
                 .antMatchers("/api/unprotected/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
