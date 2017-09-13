@@ -14,8 +14,13 @@ class WebSecurityConfig() : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
             .authorizeRequests()
+                // Expose Actuator for Prometheus to scrap session metrics.
+                // This is okay for a demo but must protect for a real prod app.
                 .antMatchers("/manage/**").permitAll()
+
+                // For testing provide unrestricted access to this end-point
                 .antMatchers("/api/unprotected/**").permitAll()
+
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
