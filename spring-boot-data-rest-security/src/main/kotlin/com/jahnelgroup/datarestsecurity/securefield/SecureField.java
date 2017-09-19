@@ -1,4 +1,4 @@
-package com.jahnelgroup.datarestsecurity.config;
+package com.jahnelgroup.datarestsecurity.securefield;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,5 +8,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value= {ElementType.FIELD})
 public @interface SecureField {
+
+    Class<? extends FieldSecurityPolicy>[] policies() default CreatedByFieldSecurityPolicy.class;
+
+    PolicyLogic[] logic() default PolicyLogic.AND;
 
 }

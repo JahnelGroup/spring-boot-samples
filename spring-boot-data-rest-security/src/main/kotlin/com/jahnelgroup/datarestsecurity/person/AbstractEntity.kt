@@ -19,7 +19,7 @@ import javax.persistence.Version
 
 @MappedSuperclass
 @EntityListeners(value = AuditingEntityListener::class)
-abstract class AbstractEntity : AbstractAggregateRoot(), Identifiable<Long>, Serializable {
+open abstract class AbstractEntity : AbstractAggregateRoot(), Identifiable<Long>, Serializable {
 
     companion object {
         val serialVersionUId = 1L

@@ -1,7 +1,7 @@
 package com.jahnelgroup.datarestsecurity.person
 
 import com.fasterxml.jackson.annotation.JsonFilter
-import com.jahnelgroup.datarestsecurity.config.SecureField
+import com.jahnelgroup.datarestsecurity.securefield.SecureField
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import javax.persistence.Entity
 import javax.persistence.EntityListeners
