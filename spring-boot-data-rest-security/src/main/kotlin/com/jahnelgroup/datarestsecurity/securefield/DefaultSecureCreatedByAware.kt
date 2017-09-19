@@ -10,6 +10,10 @@ import org.springframework.util.ReflectionUtils
 class DefaultSecureCreatedByAware : SecureFieldCreatedByAware {
 
     override fun getCreatedBy(target: Any): String {
+
+        // looping to collect all fields from base type and all super types
+        // then spin through collection to find the field
+
         var createdByField = target.javaClass.declaredFields.firstOrNull {
             // first try to find the annotation on the base class
             it.isAnnotationPresent(CreatedBy::class.java)

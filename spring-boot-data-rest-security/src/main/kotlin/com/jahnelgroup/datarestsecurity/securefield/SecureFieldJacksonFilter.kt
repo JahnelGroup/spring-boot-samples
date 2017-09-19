@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.ser.PropertyWriter
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 
 @Component
@@ -15,13 +16,14 @@ class SecureFieldJacksonFilter(
 
     override fun serializeAsField(pojo: Any, jgen: JsonGenerator, provider: SerializerProvider, writer: PropertyWriter) {
         val secureField : SecureField? = writer.findAnnotation(SecureField::class.java)
-        val createdBy : String? = secureCreatedByAware.getCreatedBy(pojo)
 
         if ( secureField != null ) {
+            val createdBy : String? = secureCreatedByAware.getCreatedBy(pojo)
             var permit : Boolean = false
 
             secureField.policies.forEach {
-                permit = it::javaObjectType.get().newInstance().permitAccess(pojo, createdBy)
+                permit = it::javaObjectType.get().newInstance().permitAccess(writer, pojo, createdBy,
+                        SecurityContextHolder.getContext().authentication.name)
             }
 
             if( permit ){
