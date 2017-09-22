@@ -1,13 +1,15 @@
 package com.jahnelgroup.datarestsecurity.person
 
 import com.fasterxml.jackson.annotation.JsonFilter
+import com.jahnelgroup.datarestsecurity.audit.AbstractEntity
 import com.jahnelgroup.datarestsecurity.club.Club
-import com.jahnelgroup.datarestsecurity.securefield.SecureField
+import com.jahnelgroup.jackson.security.SecureField
+
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import javax.persistence.Entity
 import javax.persistence.EntityListeners
 import javax.persistence.ManyToOne
-import javax.validation.constraints.NotNull
 
 @JsonFilter("securityFilter")
 @Entity

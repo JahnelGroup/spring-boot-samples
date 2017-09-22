@@ -1,4 +1,4 @@
-package com.jahnelgroup.datarestsecurity.person
+package com.jahnelgroup.datarestsecurity.audit
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.CreatedBy
@@ -19,7 +19,7 @@ import javax.persistence.Version
 
 @MappedSuperclass
 @EntityListeners(value = AuditingEntityListener::class)
-open abstract class AbstractEntity : AbstractAggregateRoot(), Identifiable<Long>, Serializable {
+abstract class AbstractEntity : AbstractAggregateRoot(), Identifiable<Long>, Serializable {
 
     companion object {
         val serialVersionUId = 1L

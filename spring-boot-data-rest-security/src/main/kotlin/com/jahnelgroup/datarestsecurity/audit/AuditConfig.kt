@@ -1,4 +1,4 @@
-package com.jahnelgroup.datarestsecurity.config
+package com.jahnelgroup.datarestsecurity.audit
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
