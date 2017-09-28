@@ -1,9 +1,0 @@
-rootProject.name = 'backend'
-
-include(':common')
-include(':injestor')
-include(':query')
-
-project(':common').projectDir = "$rootDir/common" as File
-project(':injestor').projectDir = "$rootDir/injestor" as File
-project(':query').projectDir = "$rootDir/query" as File
