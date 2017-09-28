@@ -1,0 +1,7 @@
+version = '0.0.1-SNAPSHOT'
+
+dependencies {
+	compile(project(':common'))
+	compile('org.springframework.boot:spring-boot-starter-data-elasticsearch')
+	compile('org.springframework.boot:spring-boot-starter-webflux')
+}
