@@ -21,7 +21,7 @@ class WebSecurityConfig() : WebSecurityConfigurerAdapter() {
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth.inMemoryAuthentication()
                 .withUser("user1").password("pass").roles("USER").and()
-                .withUser("user2").password("pass").roles("USER").and()
+                .withUser("user2").password("pass").roles("USER", "ONE").and()
                 .withUser("admin").password("pass").roles("USER", "ADMIN")
     }
 }

@@ -1,9 +1,10 @@
 package com.jahnelgroup.datarestsecurity.club
 
 import com.fasterxml.jackson.annotation.JsonFilter
-import com.jahnelgroup.datarestsecurity.person.AbstractEntity
+import com.jahnelgroup.datarestsecurity.audit.AbstractEntity
 import com.jahnelgroup.datarestsecurity.person.Person
-import com.jahnelgroup.datarestsecurity.securefield.SecureField
+import com.jahnelgroup.datarestsecurity.policy.ClubFieldPolicy
+import com.jahnelgroup.jackson.security.SecureField
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import javax.persistence.CascadeType
 import javax.persistence.Entity
@@ -17,8 +18,7 @@ data class Club(
 
         var clubName : String = "",
 
-        // only club members of this club can see this
-        @SecureField(policies = arrayOf(ClubFieldPolicy::class) )
+        @SecureField(policyClasses = arrayOf(ClubFieldPolicy::class))
         var clubSecretPhrase: String = ""
 
 ) : AbstractEntity() {

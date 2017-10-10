@@ -29,6 +29,7 @@ compileTestKotlin {
 
 repositories {
 	mavenCentral()
+	mavenLocal()
 }
 
 
@@ -36,6 +37,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('com.jahnelgroup.jackson:jackson-field-security:1.0.4')
 	compile('com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.0')
 	compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.0')
 	compile('com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.0')
