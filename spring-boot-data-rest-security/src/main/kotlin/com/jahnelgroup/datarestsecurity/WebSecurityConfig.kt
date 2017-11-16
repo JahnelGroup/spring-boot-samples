@@ -22,6 +22,7 @@ class WebSecurityConfig() : WebSecurityConfigurerAdapter() {
         auth.inMemoryAuthentication()
                 .withUser("user1").password("pass").roles("USER").and()
                 .withUser("user2").password("pass").roles("USER", "ONE").and()
+                .withUser("user3").password("pass").roles("USER", "TWO").and()
                 .withUser("admin").password("pass").roles("USER", "ADMIN")
     }
 }
