@@ -1,13 +1,14 @@
-package com.jahnelgroup.queue.hazelcast.reliable;
+package com.jahnelgroup.queue.hazelcast.reliableQueue;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
 
 @Entity
 public class ReliableMessage implements Serializable {
 
-    @Id
+    @Id @GeneratedValue
     private Long id;
     private String message;
 
@@ -24,9 +25,15 @@ public class ReliableMessage implements Serializable {
         this.message = message;
     }
 
+    public ReliableMessage(String message) {
+        this.message = message;
+    }
+
     public Long getId() {
         return id;
     }
+
+    public String getMessage(){ return message; }
 
     public void setId(Long id) {
         this.id = id;

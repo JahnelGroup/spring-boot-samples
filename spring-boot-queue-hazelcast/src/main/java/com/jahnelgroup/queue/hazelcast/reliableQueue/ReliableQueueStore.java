@@ -1,4 +1,4 @@
-package com.jahnelgroup.queue.hazelcast.reliable;
+package com.jahnelgroup.queue.hazelcast.reliableQueue;
 
 import com.hazelcast.core.QueueStore;
 import org.springframework.beans.factory.annotation.Autowired;

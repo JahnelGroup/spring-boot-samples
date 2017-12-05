@@ -1,4 +1,4 @@
-package com.jahnelgroup.queue.hazelcast.reliable;
+package com.jahnelgroup.queue.hazelcast.reliableQueue;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
