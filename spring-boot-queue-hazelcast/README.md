@@ -16,7 +16,7 @@ You can use either Java or XML configuration, I opted to use both here. I am usi
 
 ### [HeartbeatTopic.java](src/main/java/com/jahnelgroup/queue/hazelcast/HeartbeatTopic.java)
 
-A simple topic where a node periodically emits a Heartbeat message to every node. You shouldn't build your own Heartbeat however, [Heartbeat](http://docs.hazelcast.org/docs/latest/manual/html-single/search.html?q=heartbeat) is actually already built into Hazelcast.
+A simple topic where a node periodically emits a Heartbeat message to every node. Note that this is a simple pub/sub Topic with the fire-and-forget paradigm - it is not durable and does not gurantee each node receives the Heartbeat. You shouldn't build your own Heartbeat however, [Heartbeat](http://docs.hazelcast.org/docs/latest/manual/html-single/search.html?q=heartbeat) is actually already built into Hazelcast. 
 
 ### [AtomicLongCounter.java](src/main/java/com/jahnelgroup/queue/hazelcast/AtomicLongCounter.java)
 
