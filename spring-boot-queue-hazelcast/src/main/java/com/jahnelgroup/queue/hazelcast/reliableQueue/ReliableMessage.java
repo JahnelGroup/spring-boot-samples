@@ -5,6 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
 
+/**
+ * http://docs.hazelcast.org/docs/latest/manual/html-single/index.html#queue
+ * http://docs.hazelcast.org/docs/latest/manual/html-single/index.html#queueing-with-persistent-datastore
+ */
 @Entity
 public class ReliableMessage implements Serializable {
 

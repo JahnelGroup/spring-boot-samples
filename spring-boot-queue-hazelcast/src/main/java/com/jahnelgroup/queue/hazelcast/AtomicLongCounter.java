@@ -8,9 +8,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
- * http://docs.hazelcast.org/docs/latest-development/manual/html/Distributed_Data_Structures/IAtomicLong.html
+ * http://docs.hazelcast.org/docs/latest/manual/html-single/index.html#iatomiclong
  */
-//@Component
+@Component
 public class AtomicLongCounter {
 
     private Logger logger = LoggerFactory.getLogger(HeartbeatTopic.class);
@@ -22,8 +22,8 @@ public class AtomicLongCounter {
         logger.info("Starting Counter");
     }
 
-    @Scheduled(fixedRate = 2000L)
+    @Scheduled(fixedRate = 5000L)
     public void counter(){
-        logger.info("Incrementing to {}", atomicLong.addAndGet(1L));
+        logger.info("AtomicLongCounter incrementing to {}", atomicLong.addAndGet(1L));
     }
 }

@@ -8,10 +8,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
- * http://docs.hazelcast.org/docs/latest-development/manual/html/Distributed_Data_Structures/Topic/Getting_a_Topic_and_Publishing_Messages.html
- * http://docs.hazelcast.org/docs/latest-development/manual/html/Distributed_Data_Structures/Reliable_Topic.html
+ * http://docs.hazelcast.org/docs/latest/manual/html-single/index.html#topic
+ * http://docs.hazelcast.org/docs/latest/manual/html-single/index.html#reliable-topic
  */
-//@Component
+@Component
 public class HeartbeatTopic {
 
     private Logger logger = LoggerFactory.getLogger(HeartbeatTopic.class);
