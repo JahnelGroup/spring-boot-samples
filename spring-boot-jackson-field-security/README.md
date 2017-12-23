@@ -1,32 +1,14 @@
-# Spring Boot
+# Spring Boot Jackson Field Security
 
-Provided here is a collection of sample code for [Spring Boot](https://projects.spring.io/spring-boot/). Some of the examples are written in [Kotlin](https://kotlinlang.org/) as the community is showing a great deal of interest for moving in that direction!
-
-## What is Spring Boot?
-
-Spring Boot makes it ridiculously easy to build advanced software using Java and the Spring Framework. It's ecosystem consists of popular components like [Spring Security](https://projects.spring.io/spring-security/), [Spring Data](https://projects.spring.io/spring-data/), [Spring Integration](https://projects.spring.io/spring-integration/), [Spring Batch](https://projects.spring.io/spring-batch/), and much more. 
+A sample application demonstrating how to use [JahnelGroup/jackson-field-security](https://github.com/JahnelGroup/jackson-field-security) to protect access to your your JSON model on fields-by-field basis with Jackson.
 
 ## Getting Started
 
-The fastest way to get application running from scratch is to use [http://start.spring.io](http://start.spring.io/). Select the options you want, download the zip file, unpack it and run with [Maven](https://maven.apache.org/) or [Gradle](https://gradle.org/). 
+[Jackson](https://github.com/FasterXML/jackson) is the standard library for JSON parsing and modeling in Java. The core library doesn't have the ability to conditional control access to individual fields of the JSON model. Today you have to create entire protected views for your that can be overwhelming to absorb in to your design. We created a library to add this missing to Jackson and this sample illustrates how simple it is to use. 
 
-[Spring Boot CLI](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#cli) is another great way to develop applications. You can perform all the same actions from the web interface directly within your terminal, along with a bunch of other cool things.
+## How it works
 
-```bash
-$ spring init --dependencies=web,data-jpa my-project
-Using service at https://start.spring.io
-Project extracted to '/Users/developer/example/my-project'
-```
+Here we are leveraging [Spring Data REST](https://projects.spring.io/spring-data-rest/) to very quickly provide simple http CRUD operations. 
 
-A purchased version of [IntelliJ IDEA](https://www.jetbrains.com/idea/) has advanced support for Spring providing similar features directly within the IDE. 
+The two primary data models used in this sample are **Person** and **Club**. To get into a Club the Person would need the Club's secret phrase. Only users who are part of the Club will see that field, others will not.
 
-## Learning
-
-The Spring Framework moves fast so it's important to stay up to date, here are a few ways.
-
-* [Spring Boot Documentation](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
-* [Spring Guides](https://spring.io/guides)
-* [Spring Blog](https://spring.io/blog)
-* Follow [@springframework](https://twitter.com/springframework?lang=en) and [@springboot](https://twitter.com/springboot?lang=en) on Twitter.
-
-If you've never followed the release of new content on the web, [RSS feeds](https://www.lifewire.com/rss-101-3482781) are great way to do that. 
