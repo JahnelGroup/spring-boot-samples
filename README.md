@@ -4,7 +4,7 @@ Provided here is a collection of sample code for [Spring Boot](https://projects.
 
 ## What is Spring Boot?
 
-Spring Boot makes it rediculously easy to build advanced software using Java and the Spring Framework. It's ecosystem consists of popular components like [Spring Security](https://projects.spring.io/spring-security/), [Spring Data](https://projects.spring.io/spring-data/), [Spring Integration](https://projects.spring.io/spring-integration/), [Spring Batch](https://projects.spring.io/spring-batch/), and much more. 
+Spring Boot makes it ridiculously easy to build advanced software using Java and the Spring Framework. It's ecosystem consists of popular components like [Spring Security](https://projects.spring.io/spring-security/), [Spring Data](https://projects.spring.io/spring-data/), [Spring Integration](https://projects.spring.io/spring-integration/), [Spring Batch](https://projects.spring.io/spring-batch/), and much more. 
 
 ## Getting Started
 
@@ -18,7 +18,7 @@ Using service at https://start.spring.io
 Project extracted to '/Users/developer/example/my-project'
 ```
 
-A purchased version of [IntelliJ IDEA](https://www.jetbrains.com/idea/) has advanced support for Spring providing similiar features directly within the IDE. 
+A purchased version of [IntelliJ IDEA](https://www.jetbrains.com/idea/) has advanced support for Spring providing similar features directly within the IDE. 
 
 ## Learning
 
