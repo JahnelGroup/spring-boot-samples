@@ -1,0 +1,94 @@
+=========================================
+Spring
+=========================================
+
+spring-boot-auto-configuration
+ - Demo how to create your own simple auto configurations
+
+=========================================
+Web + Validations
+=========================================
+
+spring-boot-web-mvc-hello-world
+- Spring Web MVC w/ JSP
+- Form Validations
+
+spring-boot-web-spa-hello-world
+- Single-Page-Application w/ React
+- Reactive Form Validations
+
+=========================================
+Security
+=========================================
+
+spring-boot-security-basic-auth
+- Spring Web MVC w/ Basic Auth
+
+spring-boot-security-oauth2
+- React Single-Page-Application w/ OAuth2
+
+spring-boot-security-groups
+- Demo users, groups, permissions
+
+=========================================
+Error Handling & Validations
+=========================================
+
+spring-boot-validations
+ - 
+
+spring-boot-error-handling
+
+=========================================
+Security
+=========================================
+
+spring-boot-data-jpa
+ - Demo different mappings, one-one, one-to-many, many-to-one
+
+spring-boot-data-jpa-query-methods
+ - Demo some interesting ways to leverage query methods defined by method names in the interface
+ - https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details
+
+spring-boot-data-hibernate-envers
+ - Demo hibernate envers and retrieving history
+
+=========================================
+Batch
+=========================================
+
+spring-boot-batch-simple
+- import JSON file to database table with a couple of processing steps
+
+spring-boot-batch-advanced
+- restart job
+- partition / parallel job execution
+
+=========================================
+Monitoring
+=========================================
+spring-boot-actuator
+- Custom Health Metrics
+
+spring-boot-prometheus
+- Custom Prometheus Metrics
+
+=========================================
+Integration
+=========================================
+
+spring-boot-integration
+
+=========================================
+Third-Party Integration
+=========================================
+
+spring-boot-sendgrid
+- Demo how to send an E-Mail with SendGrid
+
+spring-boot-twilio
+- Demo how to send an SMS with Twilio
+
+
+
+
