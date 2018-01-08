@@ -43,7 +43,7 @@ spring-boot-error-handling
 Security
 =========================================
 
-spring-boot-data-jpa
+spring-boot-data-jpa-mappings
  - Demo different mappings, one-one, one-to-many, many-to-one
 
 spring-boot-data-jpa-query-methods
