@@ -57,10 +57,16 @@ spring-boot-data-hibernate-envers
 Batch
 =========================================
 
-spring-boot-batch-simple
+spring-boot-batch-word-processor
+- Take some seed string data and process it
+- how many words exists?
+- how many capital letters are there?
+- how many vowels are there?
+
+spring-boot-batch-import-file
 - import JSON file to database table with a couple of processing steps
 
-spring-boot-batch-advanced
+spring-boot-batch-parallel-execution
 - restart job
 - partition / parallel job execution
 
