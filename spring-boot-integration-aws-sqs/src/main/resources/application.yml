@@ -1,0 +1,5 @@
+aws:
+  credentials:
+    accessKey: testKey
+    secretKey: testSecret
+  queue: testQueue

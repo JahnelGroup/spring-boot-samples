@@ -1,0 +1,10 @@
+aws:
+  credentials:
+    accessKey: testKey
+    secretKey: testSecret
+  queue: testQueue
+
+logging:
+  level:
+    org.springframework.context.support: OFF
+    org.springframework.integration: WARN
