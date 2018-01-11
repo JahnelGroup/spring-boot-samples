@@ -1,16 +1,11 @@
 package com.jahnelgroup.rest.data.auction
 
-import com.jahnelgroup.rest.common.AbstractEntity
-import javax.persistence.Entity
-import javax.persistence.OneToOne
+import javax.persistence.Embeddable
 
-@Entity
+@Embeddable
 data class AuctionDetails (
 
-        @OneToOne
-        var auction : Auction,
+        var description : String = "",
+        var quantity : Long = 0
 
-        var description : String,
-        var quantity : Long
-
-) : AbstractEntity()
+)

@@ -1,7 +1,7 @@
-INSERT INTO user (username, rating, last_modified_datetime, created_datetime, version) VALUES
+INSERT INTO user (username, rating, created_by, created_datetime, last_modified_by, last_modified_datetime, version, deleted) VALUES
 
-('steven', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
-('carrie', 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
-('lauren', 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1)
+('steven', 3, 'steven', CURRENT_TIMESTAMP, 'steven', CURRENT_TIMESTAMP, 1, 0),
+('carrie', 5, 'carrie', CURRENT_TIMESTAMP, 'carrie', CURRENT_TIMESTAMP, 1, 0),
+('lauren', 4, 'lauren', CURRENT_TIMESTAMP, 'lauren', CURRENT_TIMESTAMP, 1, 0)
 
 ;

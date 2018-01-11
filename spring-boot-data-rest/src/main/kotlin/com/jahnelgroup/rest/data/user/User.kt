@@ -1,11 +1,14 @@
 package com.jahnelgroup.rest.data.user
 
-import com.jahnelgroup.rest.common.AbstractEntity
+import com.jahnelgroup.rest.common.data.AbstractEntity
 import com.jahnelgroup.rest.data.auction.Auction
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import javax.persistence.Entity
+import javax.persistence.EntityListeners
 import javax.persistence.OneToMany
 
 @Entity
+@EntityListeners(value = AuditingEntityListener::class)
 data class User (
 
         // One User can be selling ma
