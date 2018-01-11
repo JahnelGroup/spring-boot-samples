@@ -28,7 +28,7 @@ abstract class AbstractEntity : AbstractAggregateRoot(), Identifiable<Long>, Ser
 
     @CreatedBy
     @Column(nullable = false, updatable = false)
-    var createdBy: String = ""
+    var createdBy: Long = 0
 
     @CreatedDate
     @Column(nullable = false, updatable = false, columnDefinition="TIMESTAMP")
@@ -36,7 +36,7 @@ abstract class AbstractEntity : AbstractAggregateRoot(), Identifiable<Long>, Ser
 
     @LastModifiedBy
     @Column(nullable = false)
-    var lastModifiedBy: String = ""
+    var lastModifiedBy: Long = 0
 
     @LastModifiedDate
     @Column(nullable = false, columnDefinition="TIMESTAMP")
