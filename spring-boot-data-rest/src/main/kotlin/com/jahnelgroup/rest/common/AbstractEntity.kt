@@ -1,4 +1,4 @@
-package com.jahnelgroup.datarestsecurity.audit
+package com.jahnelgroup.rest.common
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.CreatedBy
@@ -30,20 +30,12 @@ abstract class AbstractEntity : AbstractAggregateRoot(), Identifiable<Long>, Ser
     @JsonIgnore
     private var id : Long? = null
 
-    @CreatedBy
-    @Column(nullable = false, updatable = false)
-    var createdBy : String = ""
-
     @CreatedDate
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, columnDefinition="TIMESTAMP")
     var createdDatetime : LocalDateTime = LocalDateTime.now()
 
-    @LastModifiedBy
-    @Column(nullable = false)
-    var lastModifiedBy : String = ""
-
     @LastModifiedDate
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition="TIMESTAMP")
     var lastModifiedDatetime : LocalDateTime = LocalDateTime.now()
 
     @Version

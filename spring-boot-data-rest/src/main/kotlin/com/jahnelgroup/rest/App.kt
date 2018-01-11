@@ -1,4 +1,4 @@
-package com.jahnelgroup.datarestsecurity
+package com.jahnelgroup.rest
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication

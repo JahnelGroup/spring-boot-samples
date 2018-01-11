@@ -1,0 +1,16 @@
+{
+  "seller":"http://localhost:8080/"
+
+}
+
+@ManyToOne
+var seller : User,
+
+// Many Auctions can be bid on by Many Users
+@ManyToMany
+var bidders : Set<User>,
+
+@OneToOne
+var auctionDetails : AuctionDetails,
+
+var title : String = ""
