@@ -5,14 +5,14 @@ import com.jahnelgroup.rest.data.auction.Auction
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import javax.persistence.Entity
 import javax.persistence.EntityListeners
+import javax.persistence.JoinColumn
 import javax.persistence.OneToMany
 
 @Entity
 @EntityListeners(value = AuditingEntityListener::class)
 data class User (
 
-        // One User can be selling ma
-        @OneToMany
+        @OneToMany(mappedBy = "seller")
         var sellingAuctions : Set<Auction> = emptySet(),
 
         @OneToMany

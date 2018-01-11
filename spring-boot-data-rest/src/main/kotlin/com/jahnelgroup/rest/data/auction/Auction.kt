@@ -19,4 +19,8 @@ data class Auction (
     @ManyToMany
     var bidders : Set<User> = emptySet()
 
+    @ManyToOne(cascade = arrayOf(CascadeType.ALL))
+    @JoinColumn(name="seller_id")
+    var seller : User? = null
+
 }

@@ -18,7 +18,7 @@ class AuditConfig(
 
     @Bean
     fun userContextProvider() = AuditorAware<String> {
-        userContextService.getCurrentUser()
+        userContextService.getCurrentUsername()
     }
 
     @Bean

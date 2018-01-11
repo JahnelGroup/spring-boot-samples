@@ -14,8 +14,13 @@ class WebSecurityConfig() : WebSecurityConfigurerAdapter() {
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.httpBasic()
-            .and().authorizeRequests().anyRequest().authenticated()
-            .and().csrf().disable()
+            .and()
+                .authorizeRequests()
+                .antMatchers("/h2-console/**").permitAll()
+                .anyRequest().authenticated()
+            .and()
+                .csrf().disable()
+                .headers().frameOptions().sameOrigin() // otherwise h2 will just display a blank page
     }
 
 }
