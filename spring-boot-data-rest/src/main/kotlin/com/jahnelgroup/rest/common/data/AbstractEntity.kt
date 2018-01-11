@@ -53,16 +53,4 @@ abstract class AbstractEntity : AbstractAggregateRoot(), Identifiable<Long>, Ser
         return id
     }
 
-    @PrePersist
-    fun prePersist() {
-        var now = ZonedDateTime.now()
-        this.createdDatetime = now
-        this.lastModifiedDatetime = now
-    }
-
-    @PreUpdate
-    fun preUpdate() {
-        this.lastModifiedDatetime = ZonedDateTime.now()
-    }
-
 }
