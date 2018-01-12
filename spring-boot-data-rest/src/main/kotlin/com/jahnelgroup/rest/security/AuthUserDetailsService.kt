@@ -1,4 +1,4 @@
-package com.jahnelgroup.rest.authentication
+package com.jahnelgroup.rest.security
 
 import com.jahnelgroup.rest.data.user.UserRepo
 import org.springframework.security.core.userdetails.UserDetails

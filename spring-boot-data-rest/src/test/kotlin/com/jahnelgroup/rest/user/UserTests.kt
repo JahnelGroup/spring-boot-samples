@@ -10,7 +10,7 @@ class UserTests : AbstractTest() {
 
     @Test
     fun `raw user list`() {
-        mockMvc.perform(get("/users").with(STEVEN_CREDENTIALS))
+        mockMvc.perform(get("/api/users").with(STEVEN_CREDENTIALS))
             .andExpect(jsonPath("$._embedded.users[*].username",
                     Matchers.contains("steven", "carrie", "lauren")))
     }

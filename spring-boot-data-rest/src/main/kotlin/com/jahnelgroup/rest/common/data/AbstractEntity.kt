@@ -32,7 +32,7 @@ abstract class AbstractEntity : AbstractAggregateRoot(), Identifiable<Long>, Ser
 
     @CreatedDate
     @Column(nullable = false, updatable = false, columnDefinition="TIMESTAMP")
-    lateinit var createdDatetime : ZonedDateTime
+    var createdDatetime : ZonedDateTime = ZonedDateTime.now()
 
     @LastModifiedBy
     @Column(nullable = false)
@@ -40,7 +40,7 @@ abstract class AbstractEntity : AbstractAggregateRoot(), Identifiable<Long>, Ser
 
     @LastModifiedDate
     @Column(nullable = false, columnDefinition="TIMESTAMP")
-    lateinit var lastModifiedDatetime : ZonedDateTime
+    var lastModifiedDatetime : ZonedDateTime = ZonedDateTime.now()
 
     @Version
     @Column(nullable = false)
