@@ -1,5 +1,6 @@
-package com.jahnelgroup.rest.data.bid
+package com.jahnelgroup.rest.data.auction.bid
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.jahnelgroup.rest.common.data.AbstractEntity
 import com.jahnelgroup.rest.data.auction.Auction
 import com.jahnelgroup.rest.data.user.User
@@ -20,6 +21,7 @@ data class Bid (
     var user : User? = null
 
     @ManyToOne
+    @JsonIgnore
     var auction : Auction? = null
 
 }

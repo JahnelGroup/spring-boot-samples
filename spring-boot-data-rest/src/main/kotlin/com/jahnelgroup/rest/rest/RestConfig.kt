@@ -1,7 +1,7 @@
 package com.jahnelgroup.rest.rest
 
 import com.jahnelgroup.rest.data.auction.Auction
-import com.jahnelgroup.rest.data.bid.Bid
+import com.jahnelgroup.rest.data.auction.bid.Bid
 import com.jahnelgroup.rest.data.user.User
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Configuration

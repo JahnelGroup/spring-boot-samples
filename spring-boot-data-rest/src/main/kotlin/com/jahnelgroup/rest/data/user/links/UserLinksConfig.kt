@@ -13,6 +13,8 @@ import org.springframework.hateoas.Resources
 
 /**
  * Add custom links to Resource's with a ResourceProcessor
+ *
+ * https://docs.spring.io/spring-data/rest/docs/current/reference/html/#_programmatic_links
  */
 @Configuration
 class UserLinksConfig (
