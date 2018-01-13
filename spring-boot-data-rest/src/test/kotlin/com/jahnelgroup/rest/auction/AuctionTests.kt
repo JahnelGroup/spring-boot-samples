@@ -4,8 +4,6 @@ import com.jahnelgroup.rest.AbstractTest
 import com.jahnelgroup.rest.data.auction.Auction
 import com.jahnelgroup.rest.data.auction.AuctionDetails
 import com.jahnelgroup.rest.data.user.UserRepo
-import com.jayway.jsonpath.JsonPath
-import org.hamcrest.Matchers
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
@@ -18,11 +16,6 @@ class AuctionTests : AbstractTest() {
 
     @Test
     fun `create an auction`() {
-        var body = contentBody(mockMvc.perform(MockMvcRequestBuilders.get("/api/users").with(STEVEN_CREDENTIALS))
-                .andReturn())
-
-        JsonPath.read<Long>(body, "")
-
         var result = mockMvc.perform(MockMvcRequestBuilders.post("/auctions").with(STEVEN_CREDENTIALS)
             .content(objectMapper.writeValueAsBytes(Auction(
                 title = "Intel CPU's",

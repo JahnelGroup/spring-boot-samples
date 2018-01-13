@@ -13,7 +13,7 @@ import javax.persistence.OneToMany
 data class User (
 
         @OneToMany(mappedBy = "seller")
-        var sellingAuctions : Set<Auction> = emptySet(),
+        var sellingAuctions : Set<Auction>? = null,
 
         @OneToMany
         var biddingAuctions : Set<Auction> = emptySet(),

@@ -9,7 +9,6 @@ import org.springframework.data.domain.AbstractAggregateRoot
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import org.springframework.hateoas.Identifiable
 import java.io.Serializable
-import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import javax.persistence.*
 
@@ -23,7 +22,6 @@ abstract class AbstractEntity : AbstractAggregateRoot(), Identifiable<Long>, Ser
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private var id : Long? = null
 
     @CreatedBy

@@ -3,15 +3,18 @@ package com.jahnelgroup.rest.data.user.links
 import com.jahnelgroup.rest.common.context.UserContextService
 import com.jahnelgroup.rest.data.user.User
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.data.rest.webmvc.RepositoryLinksResource
 import org.springframework.data.rest.webmvc.support.RepositoryEntityLinks
-import org.springframework.hateoas.*
-import org.springframework.stereotype.Component
+import org.springframework.hateoas.Link
+import org.springframework.hateoas.Resource
+import org.springframework.hateoas.ResourceProcessor
+import org.springframework.hateoas.Resources
 
 /**
  * Add custom links to Resource's with a ResourceProcessor
  */
-@Component
+@Configuration
 class UserLinksConfig (
     private val entityLinks: RepositoryEntityLinks,
     private val userContextService: UserContextService

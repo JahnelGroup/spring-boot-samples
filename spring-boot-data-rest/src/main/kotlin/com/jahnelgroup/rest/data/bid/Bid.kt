@@ -11,7 +11,7 @@ import javax.persistence.*
 @EntityListeners(value = AuditingEntityListener::class)
 data class Bid (
 
-    var amount : BigDecimal
+    var amount : BigDecimal = BigDecimal("100.00")
 
 ) : AbstractEntity(){
 
