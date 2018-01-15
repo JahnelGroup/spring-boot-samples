@@ -3,6 +3,7 @@ package com.jahnelgroup.rest.data.auction.bid
 import com.jahnelgroup.rest.common.context.UserContextService
 import com.jahnelgroup.rest.data.auction.Auction
 import com.jahnelgroup.rest.data.auction.AuctionRepo
+import org.hibernate.validator.constraints.NotEmpty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.rest.webmvc.support.RepositoryEntityLinks
@@ -10,6 +11,7 @@ import org.springframework.hateoas.Resource
 import org.springframework.hateoas.ResourceProcessor
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import javax.validation.constraints.NotNull
 
 const val SUBMIT_BID_LINK : String = "submitBid"
 
@@ -22,8 +24,7 @@ const val SUBMIT_BID_LINK : String = "submitBid"
 @RequestMapping("/api/auctions/{id}")
 class SubmitBidController(
         private val entityLinks: RepositoryEntityLinks,
-        private val userContextService: UserContextService,
-        private val auctionRepo: AuctionRepo
+        private val bidRepo: BidRepo
 ) {
 
     /**
@@ -52,11 +53,8 @@ class SubmitBidController(
         }
 
         // Add the bid
-        auction.bids = auction.bids.plus(bid)
         bid.auction = auction
-        auctionRepo.save(auction)
-
-        return bid
+        return bidRepo.save(bid)
     }
 
 }

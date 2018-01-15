@@ -19,8 +19,8 @@ data class Auction (
 
 ) : AbstractEntity() {
 
-    @OneToMany(cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
-    var bids: Set<Bid> = emptySet()
+    @OneToMany(mappedBy = "auction", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true, fetch = FetchType.EAGER)
+    var bids: MutableSet<Bid> = mutableSetOf()
 
     @ManyToOne(cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
     @JoinColumn(name = "createdBy", insertable = false, updatable = false)
@@ -28,6 +28,12 @@ data class Auction (
 
     enum class Status {
         OPEN, ENDED, CANCELED
+    }
+
+    fun addBid(bid: Bid): Auction{
+        bid.auction = this
+        bids.add(bid)
+        return this
     }
 
     fun isAcceptingBids(): Boolean {
