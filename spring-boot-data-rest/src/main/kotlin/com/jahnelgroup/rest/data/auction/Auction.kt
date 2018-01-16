@@ -19,7 +19,7 @@ data class Auction (
 
 ) : AbstractEntity() {
 
-    @OneToMany(mappedBy = "auction", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "auction", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
     var bids: MutableSet<Bid> = mutableSetOf()
 
     @ManyToOne(cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
@@ -33,6 +33,12 @@ data class Auction (
     fun addBid(bid: Bid): Auction{
         bid.auction = this
         bids.add(bid)
+        return this
+    }
+
+    fun removeBid(bid: Bid): Auction{
+        bids.remove(bid)
+        bid.auction = null
         return this
     }
 

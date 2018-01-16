@@ -19,9 +19,9 @@ data class Bid (
     @JoinColumn(name = "createdBy", insertable = false, updatable = false)
     var user : User? = null
 
-    @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "auction_id")
+    @ManyToOne
+    @JoinColumn(name = "auctionId", updatable = false)
     var auction : Auction? = null
 
 }
