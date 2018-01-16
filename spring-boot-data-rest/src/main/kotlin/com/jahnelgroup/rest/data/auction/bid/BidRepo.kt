@@ -9,6 +9,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource
 interface BidRepo : CrudRepository<Bid, Long> {
 
     @Query("select b from Bid b where b.auction.id = :auctionId AND b.createdBy = ?#{currentUserId}")
-    fun findBidByAuctionId(@Param("auctionId") auctionId : Long) : Bid
+    fun findMyBidByAuctionId(@Param("auctionId") auctionId : Long) : Bid
 
 }

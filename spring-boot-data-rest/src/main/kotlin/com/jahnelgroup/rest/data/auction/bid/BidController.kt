@@ -1,5 +1,6 @@
 package com.jahnelgroup.rest.data.auction.bid
 
+import com.jahnelgroup.rest.common.context.UserContextService
 import com.jahnelgroup.rest.data.auction.Auction
 import com.jahnelgroup.rest.data.auction.AuctionRepo
 import org.springframework.context.annotation.Bean
@@ -23,6 +24,7 @@ const val CANCEL_BID_LINK : String = "cancelBid"
 @RestController
 @RequestMapping("/api/auctions/{id}")
 class SubmitBidController(
+        private val userContextService: UserContextService,
         private val entityLinks: RepositoryEntityLinks,
         private val auctionRepo: AuctionRepo,
         private val bidRepo: BidRepo,
@@ -32,8 +34,18 @@ class SubmitBidController(
     @Bean
     fun auctionLinks() = ResourceProcessor<Resource<Auction>> {
         it.apply {
-            it.add(entityLinks.linkForSingleResource(it.content).slash(SUBMIT_BID_LINK).withRel(SUBMIT_BID_LINK))
-            it.add(entityLinks.linkForSingleResource(it.content).slash(CANCEL_BID_LINK).withRel(CANCEL_BID_LINK))
+            if( it.content.isAcceptingBids() ){
+                var myBid = it.content.bids.firstOrNull {
+                    it.user!!.id == userContextService.getCurrentUserId()
+                }
+
+                if( myBid != null ){
+                    it.add(entityLinks.linkForSingleResource(it.content).slash(CANCEL_BID_LINK).withRel(CANCEL_BID_LINK))
+                }else{
+                    it.add(entityLinks.linkForSingleResource(it.content).slash(SUBMIT_BID_LINK).withRel(SUBMIT_BID_LINK))
+                }
+            }
+
         }
     }
 
@@ -50,8 +62,11 @@ class SubmitBidController(
             throw UnableToBidException()
         }
 
-        var existingBid = bidRepo.findBidByAuctionId(auction!!.id!!)
+
+
+        var existingBid = bidRepo.findMyBidByAuctionId(auction!!.id!!)
         if( existingBid != null ){
+            // have to map values by hand...
             existingBid.amount = bid.amount
             return bidRepo.save(existingBid)
         }else {
@@ -66,9 +81,9 @@ class SubmitBidController(
     @DeleteMapping(value = CANCEL_BID_LINK)
     fun cancelBId(@PathVariable("id") auction: Auction?) : ResponseEntity<Any> {
         if (auction != null && auction.id != null) {
-            var bid = bidRepo.findBidByAuctionId(auction!!.id!!)
+            var bid = bidRepo.findMyBidByAuctionId(auction!!.id!!)
             if( bid != null ){
-                bid.auction = null
+                auction.removeBid(bid)
                 bidRepo.delete(bid)
             }
         }
