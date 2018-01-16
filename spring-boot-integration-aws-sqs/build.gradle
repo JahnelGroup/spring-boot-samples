@@ -32,13 +32,16 @@ repositories {
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-integration')
     compile('org.springframework.integration:spring-integration-http')
     compile('org.springframework.integration:spring-integration-jpa')
+    compile('org.springframework.integration:spring-integration-java-dsl:1.2.2.RELEASE')
     compile('org.springframework.integration:spring-integration-aws:1.1.0.RELEASE')
     compile('org.springframework.cloud:spring-cloud-aws-messaging:1.2.2.RELEASE')
     compile('com.amazonaws:aws-java-sdk-sqs:1.11.259')
     compile('org.projectlombok:lombok')
+    compile('com.github.ulisesbocchio:jasypt-spring-boot-starter:1.12')
     runtime('com.h2database:h2')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.codehaus.groovy:groovy:2.4.7')

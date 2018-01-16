@@ -1,10 +1,9 @@
 aws:
   credentials:
-    accessKey: testKey
-    secretKey: testSecret
-  queue: testQueue
+    accessKey: ENC(LxQneopzsziJUOrfCou7gz/uQyTVOtopy3uger1Mr1Q=)
+    secretKey: ENC(BfQ+yZMnjhRJ9McMGFpfHFLlfwPcVPT8c43sLhN0DqSeEv87mReauW0IHeUSubOsAcjf6VwVlO8=)
+  queue: jg-sqs
 
-logging:
-  level:
-    org.springframework.context.support: OFF
-    org.springframework.integration: WARN
+jasypt:
+  encryptor:
+    password: h4i1707h3king

@@ -6,21 +6,27 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 @RestController
+@RequestMapping(path = "/textMessages")
 public class TextMessageController {
 
     @Autowired
-    private IntegrationAwsSqsSampleApp.SqsInboundGateway sqsInboundGateway;
+    private IntegrationAwsSqsSampleApp.SqsGateway sqsGateway;
 
-    @RequestMapping(path = "/textMessages", method = RequestMethod.POST)
+    @PostMapping
     @ResponseBody
     @ResponseStatus(HttpStatus.ACCEPTED)
     public TextMessage sendTextMessage(@RequestBody TextMessage textMessage) throws InterruptedException, ExecutionException {
         Assert.hasText(textMessage.getContent(), "Must supply content of the TextMessage.");
-        final Future<TextMessage> result = sqsInboundGateway.sendMessage(textMessage);
-        return result.get();
+        return sqsGateway.sendMessage(textMessage);
+    }
+
+    @GetMapping("/{uuid}")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public TextMessage getMessage(@PathVariable("uuid") String uuid) {
+        return sqsGateway.getMessage(uuid);
     }
 
 }

@@ -2,13 +2,20 @@ package com.jahnelgroup.integration;
 
 import lombok.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "textMessages")
 @Data
-public class TextMessage implements Serializable {
+public class
+TextMessage implements Serializable {
 
+    @Id
     private String uuid;
     private String content;
     private LocalDateTime sentTs;

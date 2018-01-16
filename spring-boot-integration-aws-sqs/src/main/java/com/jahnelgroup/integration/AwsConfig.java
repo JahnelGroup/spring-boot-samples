@@ -13,12 +13,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AwsConfig {
 
+    /**
+     * @return The AmazonSQSAsync client to be used in our integration
+     * components to both send and receive messages using SQS
+     */
     @Bean
     public AmazonSQSAsync amazonSQS() {
         return AmazonSQSAsyncClientBuilder
                 .standard()
                 .withCredentials(new AWSStaticCredentialsProvider(awsCredentials()))
-                .withRegion(Regions.AP_NORTHEAST_1)
+                .withRegion(Regions.US_EAST_2)
                 .build();
     }
 
