@@ -1,6 +1,7 @@
-package com.jahnelgroup.integration;
+package com.jahnelgroup.integration.message.integration;
 
 import com.amazonaws.services.sqs.AmazonSQSAsync;
+import com.jahnelgroup.integration.message.TextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,14 @@ import org.springframework.messaging.PollableChannel;
 import javax.persistence.EntityManagerFactory;
 import java.time.LocalDateTime;
 
+/**
+ * Inbound Integration Flow polling for incoming messages from SQS
+ * into this Application.
+ */
 @Configuration
-public class SqsOutputIntegrationConfig {
+public class SqsInboundIntegrationConfig {
 
-    private static final Logger logger = LoggerFactory.getLogger(SqsOutputIntegrationConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(SqsInboundIntegrationConfig.class);
 
     @Autowired
     private EntityManagerFactory entityManagerFactory;
@@ -58,7 +63,7 @@ public class SqsOutputIntegrationConfig {
      * @return the IntegrationFlow 'sqsOutputFlow'
      */
     @Bean
-    public IntegrationFlow sqsOutputFlow(Jackson2JsonObjectMapper jackson2JsonObjectMapper) {
+    public IntegrationFlow sqsReceiveFlow(Jackson2JsonObjectMapper jackson2JsonObjectMapper) {
         // Start the integration flow at the channel the sqs adapter is putting the messages on
         return IntegrationFlows.from(sqsQueue)
                 // Transform the JSON payload to our TextMessage Object
@@ -67,7 +72,7 @@ public class SqsOutputIntegrationConfig {
                         // be configured with a poller to initiate the message flow
                         e -> e.poller(Pollers.fixedRate(50).maxMessagesPerPoll(1)))
                 // Enrich a property of the payload
-                .enrich(e -> e.property("receivedTs", LocalDateTime.now()))
+                .enrich(e -> e.property("receivedFromSQSTs", LocalDateTime.now()))
                 // Log the message at INFO level
                 .log(LoggingHandler.Level.INFO)
                 // Persist the TextMessage using a Jpa.outboundAdapter.  Note

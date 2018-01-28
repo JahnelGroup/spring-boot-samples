@@ -1,4 +1,4 @@
-package com.jahnelgroup.integration;
+package com.jahnelgroup.integration.common;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.DeserializationContext;

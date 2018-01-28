@@ -1,4 +1,4 @@
-package com.jahnelgroup.integration;
+package com.jahnelgroup.integration.message;
 
 import lombok.Data;
 
@@ -18,11 +18,11 @@ TextMessage implements Serializable {
     @Id
     private String uuid;
     private String content;
-    private LocalDateTime sentTs;
-    private LocalDateTime receivedTs;
+    private LocalDateTime sentToSQSTs;
+    private LocalDateTime receivedFromSQSTs;
 
     public Long computeSendReceiveDiff() {
-        return Duration.between(sentTs, receivedTs).toMillis();
+        return Duration.between(sentToSQSTs, receivedFromSQSTs).toMillis();
     }
 
     public static TextMessage fromContent(String content) {

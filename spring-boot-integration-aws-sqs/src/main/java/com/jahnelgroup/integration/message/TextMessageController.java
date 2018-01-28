@@ -1,5 +1,6 @@
-package com.jahnelgroup.integration;
+package com.jahnelgroup.integration.message;
 
+import com.jahnelgroup.integration.message.integration.SqsGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
@@ -12,7 +13,7 @@ import java.util.concurrent.ExecutionException;
 public class TextMessageController {
 
     @Autowired
-    private IntegrationAwsSqsSampleApp.SqsGateway sqsGateway;
+    private SqsGateway sqsGateway;
 
     @PostMapping
     @ResponseBody
