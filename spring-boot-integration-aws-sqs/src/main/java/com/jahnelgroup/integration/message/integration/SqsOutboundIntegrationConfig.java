@@ -97,8 +97,8 @@ public class SqsOutboundIntegrationConfig {
                 .claimCheckOut(inMemoryMessageStore(), Boolean.FALSE)
                 // Enrich some payload properties, as well as a header property
                 .enrich(e -> e
-                        .property("sentToSQSTs", LocalDateTime.now())
-                        .property("uuid", UUID.randomUUID().toString())
+                        .propertyFunction("sentToSQSTs", m -> LocalDateTime.now())
+                        .propertyFunction("uuid", m -> UUID.randomUUID().toString())
                         .header(AwsHeaders.QUEUE, queue))
                 // Transform the payload to JSON
                 .transform(Transformers.toJson(jackson2JsonObjectMapper, ObjectToJsonTransformer.ResultType.STRING))

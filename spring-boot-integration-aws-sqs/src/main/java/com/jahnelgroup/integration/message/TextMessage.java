@@ -12,8 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "textMessages")
 @Data
-public class
-TextMessage implements Serializable {
+public class TextMessage implements Serializable {
 
     @Id
     private String uuid;

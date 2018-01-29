@@ -12,12 +12,14 @@ import org.springframework.integration.aws.inbound.SqsMessageDrivenChannelAdapte
 import org.springframework.integration.dsl.GenericEndpointSpec;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
+import org.springframework.integration.dsl.channel.MessageChannels;
 import org.springframework.integration.dsl.core.Pollers;
 import org.springframework.integration.dsl.jpa.Jpa;
 import org.springframework.integration.dsl.support.Transformers;
 import org.springframework.integration.handler.LoggingHandler;
 import org.springframework.integration.jpa.support.PersistMode;
 import org.springframework.integration.support.json.Jackson2JsonObjectMapper;
+import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.PollableChannel;
 
 import javax.persistence.EntityManagerFactory;
@@ -58,7 +60,17 @@ public class SqsInboundIntegrationConfig {
     }
 
     /**
-     * The IntegrationFlow that consumes messages from SQS
+     * A synchronous pub-sub channel.  Since no task executor has been set for the pub-sub
+     * channel all subscribers will execute synchronously one at a time.
+     * @return the pub-sub channel
+     */
+    @Bean
+    public MessageChannel sqsInboundPubSubChannel() {
+        return MessageChannels.publishSubscribe("sqsInboundPubSubChannel").get();
+    }
+
+    /**
+     * The IntegrationFlow that consumes messages from SQS and publishes them on a pub-sub channel
      * @param jackson2JsonObjectMapper the @Autowired Jackson2JsonObjectMapper
      * @return the IntegrationFlow 'sqsOutputFlow'
      */
@@ -72,9 +84,18 @@ public class SqsInboundIntegrationConfig {
                         // be configured with a poller to initiate the message flow
                         e -> e.poller(Pollers.fixedRate(50).maxMessagesPerPoll(1)))
                 // Enrich a property of the payload
-                .enrich(e -> e.property("receivedFromSQSTs", LocalDateTime.now()))
+                .enrich(e -> e.propertyFunction("receivedFromSQSTs", m -> LocalDateTime.now()))
                 // Log the message at INFO level
                 .log(LoggingHandler.Level.INFO)
+                // Send the message on a pub-sub channel for any subscribers who care to consume
+                .channel(sqsInboundPubSubChannel())
+                .get();
+    }
+
+    @Bean
+    public IntegrationFlow sqsPersistenceFlow() {
+        // Subscribe the the pub-sub channel
+        return IntegrationFlows.from(sqsInboundPubSubChannel())
                 // Persist the TextMessage using a Jpa.outboundAdapter.  Note
                 // that outbound adapters do NOT produce a reply so therefore this is
                 // the end of the message flow.  If we wanted to continue processing
