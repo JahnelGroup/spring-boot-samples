@@ -20,3 +20,32 @@ There is a groovy test that invokes all the integration flows using a real SQS q
 ````
 gradle test
 ````
+
+#### Invoking the endpoints
+````
+$ http POST :8080/textMessages content="Hello, World"
+HTTP/1.1 202 
+Content-Type: application/json;charset=UTF-8
+Date: Sun, 28 Jan 2018 22:15:18 GMT
+Transfer-Encoding: chunked
+
+{
+    "content": "Hello, World",
+    "receivedFromSQSTs": null,
+    "sentToSQSTs": "2018-01-28T16:15:09.902",
+    "uuid": "12f15236-e2bb-4e7f-a712-01341effc585"
+}
+
+$ http :8080/textMessages/12f15236-e2bb-4e7f-a712-01341effc585
+HTTP/1.1 200 
+Content-Type: application/json;charset=UTF-8
+Date: Sun, 28 Jan 2018 22:17:59 GMT
+Transfer-Encoding: chunked
+
+{
+    "content": "Hello, World",
+    "receivedFromSQSTs": "2018-01-28T16:15:09.755",
+    "sentToSQSTs": "2018-01-28T16:15:09.902",
+    "uuid": "12f15236-e2bb-4e7f-a712-01341effc585"
+}
+````
