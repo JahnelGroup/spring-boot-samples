@@ -1,5 +1,6 @@
 package com.jahnelgroup.integration
 
+import com.jahnelgroup.integration.message.TextMessage
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -10,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class IntegrationAwsSqsSampleAppTests {
+class AppTests {
 
     @Autowired
     private TestRestTemplate restTemplate
@@ -23,8 +24,8 @@ class IntegrationAwsSqsSampleAppTests {
         def resultMsg = responseEntity.getBody()
         assert msg.getContent() == resultMsg.getContent()
         assert resultMsg.getUuid() != null
-        assert resultMsg.getSentTs() != null
-        assert resultMsg.getReceivedTs() == null
+        assert resultMsg.getSentToSQSTs() != null
+        assert resultMsg.getReceivedFromSQSTs() == null
         sleep(3000)
         def persistedEntity = restTemplate.getForEntity(
                 String.format("/textMessages/%s", resultMsg.getUuid()),
@@ -32,7 +33,7 @@ class IntegrationAwsSqsSampleAppTests {
         assert persistedEntity.getStatusCode() == HttpStatus.OK
         def entity = persistedEntity.getBody()
         assert resultMsg.getUuid() == entity.getUuid()
-        assert entity.getReceivedTs() != null
+        assert entity.getReceivedFromSQSTs() != null
     }
 
 }

@@ -1,4 +1,4 @@
-package com.jahnelgroup.integration;
+package com.jahnelgroup.integration.aws;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;

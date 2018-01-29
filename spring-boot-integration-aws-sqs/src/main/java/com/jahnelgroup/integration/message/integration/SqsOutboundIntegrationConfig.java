@@ -1,4 +1,4 @@
-package com.jahnelgroup.integration;
+package com.jahnelgroup.integration.message.integration;
 
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,8 +23,12 @@ import javax.persistence.EntityManagerFactory;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Outbound Integration Flow sending outgoing messages from this Application
+ * out to SQS.
+ */
 @Configuration
-public class SqsInboundIntegrationConfig {
+public class SqsOutboundIntegrationConfig {
 
     @Autowired
     private EntityManagerFactory entityManagerFactory;
@@ -34,12 +38,6 @@ public class SqsInboundIntegrationConfig {
 
     @Autowired
     private MessageChannel sqsGatewaySendChannel;
-
-    @Autowired
-    private MessageChannel sqsGetChannel;
-
-    @Autowired
-    private TextMessageRepository textMessageRepository;
 
     @Value("${aws.queue}")
     private String queue;
@@ -84,7 +82,7 @@ public class SqsInboundIntegrationConfig {
      * @return the IntegrationFlow 'httpInboundFlow'
      */
     @Bean
-    public IntegrationFlow httpInboundFlow(Jackson2JsonObjectMapper jackson2JsonObjectMapper) {
+    public IntegrationFlow sendToSqsFlow(Jackson2JsonObjectMapper jackson2JsonObjectMapper) {
         // Start the flow from the gateway inbound channel
         return IntegrationFlows.from(sqsGatewaySendChannel)
                 // Log the inbound message at INFO level
@@ -99,7 +97,7 @@ public class SqsInboundIntegrationConfig {
                 .claimCheckOut(inMemoryMessageStore(), Boolean.FALSE)
                 // Enrich some payload properties, as well as a header property
                 .enrich(e -> e
-                        .property("sentTs", LocalDateTime.now())
+                        .property("sentToSQSTs", LocalDateTime.now())
                         .property("uuid", UUID.randomUUID().toString())
                         .header(AwsHeaders.QUEUE, queue))
                 // Transform the payload to JSON
@@ -115,13 +113,5 @@ public class SqsInboundIntegrationConfig {
                 })
                 .get();
     }
-
-    @Bean
-    public IntegrationFlow httpGetMessageFlow() {
-        return IntegrationFlows.from(sqsGetChannel)
-                .<String>handle((uuid, h) -> textMessageRepository.findOne(uuid))
-                .get();
-    }
-
 
 }
