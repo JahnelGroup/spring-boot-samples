@@ -1,21 +1,21 @@
-package com.jahnelgroup.integration.message.integration;
+package com.jahnelgroup.integration.message.integration
 
-import com.jahnelgroup.integration.message.TextMessage;
-import org.springframework.integration.annotation.Gateway;
-import org.springframework.integration.annotation.MessagingGateway;
+import com.jahnelgroup.integration.message.TextMessage
+import org.springframework.integration.annotation.Gateway
+import org.springframework.integration.annotation.MessagingGateway
 
 @MessagingGateway
-public interface SqsGateway {
+interface SqsGateway {
 
     /**
      * This method accepts a text message, wraps it in a Message
      * and sends it on the 'sqsGatewaySendChannel' which
-     * begins the integration flow
+     * begins the com.jahnelgroup.integration flow
      * @param textMessage the payload to send
-     * @return the result of the integration flow
+     * @return the result of the com.jahnelgroup.integration flow
      */
     @Gateway(requestChannel = "sqsGatewaySendChannel")
-    TextMessage sendMessage(TextMessage textMessage);
+    fun sendMessage(textMessage: TextMessage): TextMessage
 
     /**
      * A simple RESTful GET operation implemented using
@@ -24,6 +24,6 @@ public interface SqsGateway {
      * @return The appropriate TextMessage
      */
     @Gateway(requestChannel = "sqsGetChannel")
-    TextMessage getMessage(String uuid);
+    fun getMessage(uuid: String): TextMessage
 
 }
