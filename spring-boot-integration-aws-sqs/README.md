@@ -3,6 +3,8 @@
 This app demonstrates both sending and receiving messages using Spring Integration
 and AWS SQS.
 
+![spring-boot-integration-aws-sqs](https://user-images.githubusercontent.com/26745523/35575632-80888364-05a2-11e8-866f-32e40ecad4d7.png)
+
 The app consists of the following:
 
 1. A simple @RestController for TextMessage objects mapped to /textMessages
