@@ -17,7 +17,7 @@ import java.util.Optional
  * like retrieving an item from the database.
  */
 @Configuration
-class TextMessageRepoIntegrationFlow {
+class TextMessageRepoIntegrationConfig {
 
     @Autowired
     lateinit var sqsGetChannel: MessageChannel

@@ -1,4 +1,4 @@
-package com.jahnelgroup.integration.message.integration
+package com.jahnelgroup.integration.message.gateway
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

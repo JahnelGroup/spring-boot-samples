@@ -7,7 +7,3 @@ aws:
 jasypt:
   encryptor:
     password: h4i1707h3king
-
-spring.jackson.serialization.write_dates_as_timestamps: false
-
-spring.h2.console.enabled: true

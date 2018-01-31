@@ -1,6 +1,6 @@
 package com.jahnelgroup.integration.message
 
-import com.jahnelgroup.integration.message.integration.SqsGateway
+import com.jahnelgroup.integration.message.gateway.SqsGateway
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.util.Assert
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 import java.util.concurrent.ExecutionException
 
 @RestController
-@RequestMapping(path = ["/textMessages"])
+@RequestMapping(path = arrayOf("/textMessages") )
 class TextMessageController {
 
     @Autowired

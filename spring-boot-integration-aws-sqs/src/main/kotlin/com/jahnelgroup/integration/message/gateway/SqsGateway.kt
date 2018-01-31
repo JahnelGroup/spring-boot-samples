@@ -1,4 +1,4 @@
-package com.jahnelgroup.integration.message.integration
+package com.jahnelgroup.integration.message.gateway
 
 import com.jahnelgroup.integration.message.TextMessage
 import org.springframework.integration.annotation.Gateway
