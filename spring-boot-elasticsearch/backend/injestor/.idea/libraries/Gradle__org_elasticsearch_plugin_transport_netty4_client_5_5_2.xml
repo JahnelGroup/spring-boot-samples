@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.elasticsearch.plugin:transport-netty4-client:5.5.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.elasticsearch.plugin/transport-netty4-client/5.5.2/604d1a85aa3659d2276bf49193691598e0aae355/transport-netty4-client-5.5.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.elasticsearch.plugin/transport-netty4-client/5.5.2/a4ca6135465a7908a5542a4d86299000aea9b882/transport-netty4-client-5.5.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
