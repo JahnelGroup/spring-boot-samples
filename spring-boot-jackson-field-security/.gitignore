@@ -1,7 +1,8 @@
 ### Maven ###
 target/
 .mvn
-out/
+/out/
+/build/
 
 ### STS ###
 .apt_generated
