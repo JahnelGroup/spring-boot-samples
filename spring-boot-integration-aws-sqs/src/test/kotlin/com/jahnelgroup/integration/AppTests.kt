@@ -30,14 +30,14 @@ class AppTests {
         class TestConfig {
 
             @Autowired
-            lateinit var sqsInboundPubSubChannel: MessageChannel
+            lateinit var sqsOutboundPubSubChannel: MessageChannel
 
             @Bean
             fun testSemaphore(): Semaphore = Semaphore(0)
 
             @Bean
             fun testPubSubFlow(): IntegrationFlow =
-                    IntegrationFlows.from(sqsInboundPubSubChannel)
+                    IntegrationFlows.from(sqsOutboundPubSubChannel)
                             .handle({ _ -> testSemaphore().release(1) })
                             .get()
         }
