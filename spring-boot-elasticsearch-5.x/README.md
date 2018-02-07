@@ -14,8 +14,8 @@ Elasticsearch and Kibana are running in a docker container, so start it up with 
 
 ```bash
 $ docker-compose up -d
-Creating springboot2datajestelasticsearch5_elasticsearch_1
-Creating springboot2datajestelasticsearch5_kibana_1
+Creating springbootelasticsearch5x_elasticsearch_1
+Creating springbootelasticsearch5x_kibana_1
 ```
 
 Then start the Spring app:
