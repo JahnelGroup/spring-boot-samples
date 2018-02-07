@@ -8,7 +8,23 @@ This sample demonstrates Spring Boot 2 connecting to an external dockerized Elas
 * Elasticsearch is running at **localhost:9200**, but receives direct communication from Spring via 9300
 * Kibana is running at **localhost:5601** (credentials are **elastic/changeme**)
 
-## Use
+## Starting the Sample
+
+Elasticsearch and Kibana are running in a docker container, so start it up with docker-compose:
+
+```bash
+$ docker-compose up -d
+Creating springboot2datajestelasticsearch5_elasticsearch_1
+Creating springboot2datajestelasticsearch5_kibana_1
+```
+
+Then start the Spring app:
+
+```
+$ gradle bootRun
+```
+
+## Trying it out
 
 Create an entity by POSTing data to the Spring-Boot service. It will be stored in Elasticsearch.
 
