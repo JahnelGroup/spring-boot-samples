@@ -79,3 +79,5 @@ Transfer-Encoding: chunked
 ```
 
 The view from Kibana:
+
+![screenshot from 2018-02-07 16-01-09](https://user-images.githubusercontent.com/26745523/35944104-f9cce15a-0c20-11e8-9d9c-86c5fd9d77bc.png)
