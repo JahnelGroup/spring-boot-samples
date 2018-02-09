@@ -8,9 +8,6 @@ import org.springframework.boot.runApplication
 class Es5Application : CommandLineRunner {
     override fun run(vararg args: String?) {
         println("=========== Running ============")
-
-
-        println("=========== Done ============")
     }
 
 }
