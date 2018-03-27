@@ -2,6 +2,7 @@ package com.example.springbootvalidation;
 
 import com.example.springbootvalidation.by_interface.UserValidator;
 import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @PostMapping("users/annotation")
+    @PostMapping("/users/annotation")
     public String by_annotation(@Valid @RequestBody com.example.springbootvalidation.by_annotation.User user){
         return "PASSED";
     }
@@ -32,7 +33,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @PostMapping("/interface")
+    @PostMapping("/users/interface")
     public List<ObjectError> byInterface(@RequestBody  com.example.springbootvalidation.by_interface.User user){
         Errors errors = new BeanPropertyBindingResult(user, "user");
         userValidator.validate(user, errors);
