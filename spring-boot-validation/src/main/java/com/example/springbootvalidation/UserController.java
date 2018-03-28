@@ -21,7 +21,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @PostMapping("users/annotation")
+    @PostMapping("/users/annotation")
     public String by_annotation(@Valid @RequestBody com.example.springbootvalidation.by_annotation.User user){
         return "PASSED";
     }
@@ -32,11 +32,10 @@ public class UserController {
      * @param user
      * @return
      */
-    @PostMapping("/interface")
+    @PostMapping("/users/interface")
     public List<ObjectError> byInterface(@RequestBody  com.example.springbootvalidation.by_interface.User user){
         Errors errors = new BeanPropertyBindingResult(user, "user");
         userValidator.validate(user, errors);
-
         return errors.getAllErrors();
     }
 }
