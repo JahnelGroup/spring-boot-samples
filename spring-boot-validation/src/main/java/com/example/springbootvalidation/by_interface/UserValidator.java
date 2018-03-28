@@ -20,7 +20,7 @@ public class UserValidator implements Validator {
 
     private void rejectIfEmptyOrWhitespace(Errors errors, String...fields){
         for(String field : fields){
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, field, "empty");
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, field, "NotNull");
         }
     }
 }
