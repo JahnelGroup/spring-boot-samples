@@ -1,9 +1,9 @@
-package com.example.springbootvalidation.by_interface;
+package com.example.springbootvalidation.by_mvc;
 
+import com.example.springbootvalidation.by_interface.User;
 import org.springframework.validation.Errors;
 import org.springframework.validation.SmartValidator;
 import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
 
 public class UserValidator implements SmartValidator {
 

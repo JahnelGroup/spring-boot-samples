@@ -1,4 +1,4 @@
-package com.example.springbootvalidation.by_annotation;
+package com.example.springbootvalidation.by_mvc;
 
 import lombok.Data;
 
