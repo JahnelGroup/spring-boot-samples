@@ -5,7 +5,7 @@ import org.springframework.validation.SmartValidator;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-public class UserValidator implements SmartValidator {
+public class UserValidator implements Validator{
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -14,7 +14,8 @@ public class UserValidator implements SmartValidator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        validate(target, errors, null);
+        User user = (User) target;
+        rejectIfEmptyOrWhitespace(errors, "username", "firstName", "lastName");
     }
 
     private void rejectIfEmptyOrWhitespace(Errors errors, String...fields){
@@ -23,10 +24,5 @@ public class UserValidator implements SmartValidator {
         }
     }
 
-    @Override
-    public void validate(Object target, Errors errors, Object... validationHints) {
-        User user = (User) target;
 
-        rejectIfEmptyOrWhitespace(errors, "username", "firstName", "lastName");
-    }
 }
