@@ -1,0 +1,9 @@
+{
+  "properties": {
+    "id":         { "type": "integer"  },
+    "name":       { "type": "keyword"  },
+    "age":        { "type": "integer"  },
+    "weight":     { "type": "integer"  },
+    "type":       { "type": "keyword"  }
+  }
+}
