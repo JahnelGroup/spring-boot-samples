@@ -28,6 +28,6 @@ repositories {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter')
 	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('com.jahnelgroup.cartographer:cartographer-spring:1.0.3')
+	compile('com.jahnelgroup.cartographer:cartographer-spring:1.0.4')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
