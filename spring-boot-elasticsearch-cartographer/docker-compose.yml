@@ -17,6 +17,15 @@ services:
       - "xpack.security.enabled=false"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
 
+  kibana:
+    image: docker.elastic.co/kibana/kibana-oss:6.2.0
+    restart: always
+    network_mode: host
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_URL: http://localhost:9200
+
 # Must be mounted like this or else permission aren't correct
 volumes:
   esdata:
