@@ -2,10 +2,7 @@ package com.jahnelgroup.queue.hazelcast.reliableQueue;
 
 import com.hazelcast.config.QueueConfig;
 import com.hazelcast.config.QueueStoreConfig;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IQueue;
-import com.hazelcast.core.ItemEvent;
-import com.hazelcast.core.ItemListener;
+import com.hazelcast.core.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -27,11 +24,11 @@ public class ReliableMessagePublisher {
     public ReliableMessagePublisher(HazelcastInstance hazelcastInstance, ReliableQueueStore store) {
         QueueConfig queueConfig = hazelcastInstance.getConfig().getQueueConfig(QUEUE_NAME);
         queueConfig.setMaxSize(0); // unbounded
-        queueConfig.setQueueStoreConfig(new QueueStoreConfig().setStoreImplementation(store));
 
+        QueueStoreConfig queueStoreConfig = new QueueStoreConfig().setStoreImplementation(store);
+        queueStoreConfig.setProperty("memory-limit", "0");
 
-
-
+        queueConfig.setQueueStoreConfig(queueStoreConfig);
 
         this.reliableQueue = hazelcastInstance.getQueue( QUEUE_NAME );
         this.reliableQueue.addItemListener(
