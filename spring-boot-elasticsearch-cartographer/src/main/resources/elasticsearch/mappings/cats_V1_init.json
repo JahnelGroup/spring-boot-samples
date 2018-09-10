@@ -1,7 +1,10 @@
 {
   "properties": {
     "id":         { "type": "integer"  },
-    "name":       { "type": "keyword"  },
+    "name":       {
+      "type": "text",
+      "analyzer": "english"
+    },
     "type":       { "type": "keyword"  },
     "numOfLives": { "type": "integer"  }
   }
