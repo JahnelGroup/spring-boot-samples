@@ -51,6 +51,11 @@ class AccountController(
     fun read(@PathVariable account: Account) = account
 
     @ResponseBody
+    @GetMapping("/accounts/{account}/write")
+    @PostAuthorize("hasPermission(#account, 'write')")
+    fun write(@PathVariable account: Account) = account
+
+    @ResponseBody
     @GetMapping("/accounts/{account}/admin")
     @PostAuthorize("hasPermission(#account, 'administration')")
     fun admin(@PathVariable account: Account) = account

@@ -106,19 +106,19 @@
                 <div class="col-sm-3">
                     <div class="well">
                         <h4>Owner (admin)</h4>
-                        <p th:each="principal : ${accountService.getReadAcl(account.id, 'administration')}"><span th:text="${principal}"></span></p>
+                        <p th:each="principal : ${accountService.getUsersByPermission(account.id, 'administration')}"><span th:text="${principal}"></span></p>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="well">
                         <h4>Joint (write)</h4>
-                        <p th:each="principal : ${accountService.getReadAcl(account.id, 'write')}"><span th:text="${principal}"></span></p>
+                        <p th:each="principal : ${accountService.getUsersByPermission(account.id, 'write')}"><span th:text="${principal}"></span></p>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="well">
                         <h4>Read (read)</h4>
-                        <p th:each="principal : ${accountService.getReadAcl(account.id, 'read')}"><span th:text="${principal}"></span></p>
+                        <p th:each="principal : ${accountService.getUsersByPermission(account.id, 'read')}"><span th:text="${principal}"></span></p>
                     </div>
                 </div>
             </div>

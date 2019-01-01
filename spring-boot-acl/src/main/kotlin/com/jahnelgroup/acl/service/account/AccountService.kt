@@ -5,16 +5,8 @@ import com.jahnelgroup.acl.domain.account.AccountRepo
 import com.jahnelgroup.acl.domain.user.UserRepo
 import com.jahnelgroup.acl.service.context.UserContextService
 import org.springframework.security.access.PermissionEvaluator
-import org.springframework.security.access.prepost.PostFilter
-import org.springframework.security.acls.domain.AclFormattingUtils
-import org.springframework.security.acls.domain.BasePermission
-import org.springframework.security.acls.domain.ObjectIdentityImpl
-import org.springframework.security.acls.domain.PrincipalSid
-import org.springframework.security.acls.model.MutableAcl
-import org.springframework.security.acls.model.MutableAclService
-import org.springframework.security.acls.model.NotFoundException
-import org.springframework.security.acls.model.Permission
-import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.acls.domain.*
+import org.springframework.security.acls.model.*
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional
 
@@ -22,10 +14,10 @@ import javax.transaction.Transactional
 class AccountService(
         private var accountRepo: AccountRepo,
         private var userRepo: UserRepo,
-        private var aclService: MutableAclService,
-        private var permissionEvaluator: PermissionEvaluator,
-        private var userContextService: UserContextService
+        private var aclService: MutableAclService
 ) {
+
+    private var permissionFactory: PermissionFactory = DefaultPermissionFactory()
 
     //@PostFilter("principal.username == filterObject.createdBy")
     fun findAll(): Iterable<Account> = accountRepo.findAll()
@@ -50,6 +42,10 @@ class AccountService(
         //
         val sid = PrincipalSid(account.primaryOwner!!.username)
         acl!!.let {
+            it.insertAce(it.entries.size, BasePermission.READ, sid, true)
+            it.insertAce(it.entries.size, BasePermission.WRITE, sid, true)
+            it.insertAce(it.entries.size, BasePermission.CREATE, sid, true)
+            it.insertAce(it.entries.size, BasePermission.DELETE, sid, true)
             it.insertAce(it.entries.size, BasePermission.ADMINISTRATION, sid, true)
         }
 
@@ -60,15 +56,13 @@ class AccountService(
             val sid = PrincipalSid(it.username)
 
             acl.let {
-                it.insertAce(it.entries.size, object : Permission {
-                    override fun getPattern() =  AclFormattingUtils.printBinary(mask, '*')
-                    override fun getMask() = BasePermission.WRITE.mask or BasePermission.CREATE.mask
-                }, sid, true)
+                it.insertAce(it.entries.size, BasePermission.READ, sid, true)
+                it.insertAce(it.entries.size, BasePermission.WRITE, sid, true)
             }
         }
 
         //
-        // ACE: Joint Owners
+        // ACE: Read Only
         //
         account.readOnly.forEach {
             val sid = PrincipalSid(it.username)
@@ -82,28 +76,20 @@ class AccountService(
         return e
     }
 
-    fun getReadAcl(id: Long, permission: String): List<String> {
-        var account = accountRepo.findById(id)
-
+    fun getUsersByPermission(id: Long, permission: String): Set<String> {
+        var users = mutableSetOf<String>()
         val oi = ObjectIdentityImpl(Account::class.java, id)
-        var acl = aclService.readAclById(oi)
 
-        return acl.entries.asSequence().map {
-            var sidname: String = "FALSE"
-
-            var sid = it.sid
-            if (sid is PrincipalSid){
-                sidname = sid.principal
-                var siduser = userRepo.findByUsername(sidname)
-
+        userRepo.findAll().forEach { user ->
+            var acl = aclService.readAclById(oi)
+            if( acl.entries.any {
+                        user.username == (it.sid as PrincipalSid).principal &&
+                        it.permission.mask == permissionFactory.buildFromName(permission.toUpperCase()).mask
+                    } ){
+                users.add(user.username)
             }
-
-            userContextService.impersonateUser(userRepo.findByUsername(sidname).get())
-            if( !permissionEvaluator.hasPermission(SecurityContextHolder.getContext().authentication, account.get(), permission))
-                "NO"
-            else
-                sidname
-        }.filter { it != "NO" }.toList()
+        }
+        return users
     }
 
 }

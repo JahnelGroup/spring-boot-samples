@@ -2,10 +2,7 @@ package com.jahnelgroup.acl.domain.account
 
 import com.jahnelgroup.acl.domain.AbstractEntity
 import com.jahnelgroup.acl.domain.user.User
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.OneToMany
-import javax.persistence.OneToOne
+import javax.persistence.*
 import javax.validation.constraints.NotNull
 
 @Entity
@@ -19,12 +16,10 @@ data class Account(
         @field:OneToOne
         var primaryOwner: User? = null,
 
-        @field:NotNull
-        @field:OneToMany
+        @field:ManyToMany
         var jointOwners: Set<User> = emptySet(),
 
-        @field:NotNull
-        @field:OneToMany
+        @field:ManyToMany
         var readOnly: Set<User> = emptySet()
 
 ): AbstractEntity()
