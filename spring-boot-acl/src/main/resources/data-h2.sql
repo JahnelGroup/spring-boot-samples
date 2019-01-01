@@ -91,10 +91,10 @@ ALTER TABLE acl_object_identity
 ADD FOREIGN KEY (owner_sid) REFERENCES acl_sid (id);
 
 insert into users(username, password, enabled) values
-('Steven' , '$2y$12$8kcuL.1Jg.6/Ai3YtSSjUeMHUNI5bqt/bJXZFtiElPdhtt3S/r/X6', true), -- pass
-('Darrin' , '$2y$12$8kcuL.1Jg.6/Ai3YtSSjUeMHUNI5bqt/bJXZFtiElPdhtt3S/r/X6', true), -- pass
-('Jason'  , '$2y$12$8kcuL.1Jg.6/Ai3YtSSjUeMHUNI5bqt/bJXZFtiElPdhtt3S/r/X6', true), -- pass
-('Jon'    , '$2y$12$8kcuL.1Jg.6/Ai3YtSSjUeMHUNI5bqt/bJXZFtiElPdhtt3S/r/X6', true); -- pass
+('Steven' , '$2a$12$PD9BYaK1yxzPwDww60UG.OIWbc1mp/uV9tNPpdgrRt5vnxz1OhpCq', true), -- pass
+('Darrin' , '$2a$12$PD9BYaK1yxzPwDww60UG.OIWbc1mp/uV9tNPpdgrRt5vnxz1OhpCq', true), -- pass
+('Jason'  , '$2a$12$PD9BYaK1yxzPwDww60UG.OIWbc1mp/uV9tNPpdgrRt5vnxz1OhpCq', true), -- pass
+('Jon'    , '$2a$12$PD9BYaK1yxzPwDww60UG.OIWbc1mp/uV9tNPpdgrRt5vnxz1OhpCq', true); -- pass
 
 insert into authorities (username, authority) values
 ('Steven' , 'ROLE_USER'),

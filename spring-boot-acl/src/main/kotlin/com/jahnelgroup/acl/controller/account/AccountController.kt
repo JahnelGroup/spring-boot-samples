@@ -6,6 +6,7 @@ import com.jahnelgroup.acl.domain.user.UserRepo
 import com.jahnelgroup.acl.service.account.AccountService
 import com.jahnelgroup.acl.service.context.UserContextService
 import org.springframework.security.access.prepost.PostAuthorize
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
@@ -21,6 +22,7 @@ class AccountController(
     @ModelAttribute fun useRepo() = userRepo
     @ModelAttribute fun accountRepo() = accountRepo
     @ModelAttribute fun accountService() = accountService
+    @ModelAttribute fun userContextService() = userContextService
 
     @GetMapping("/")
     fun get(model: Model): String{
@@ -45,19 +47,16 @@ class AccountController(
         return "home"
     }
 
-    @ResponseBody
-    @GetMapping("/accounts/{account}/read")
-    @PostAuthorize("hasPermission(#account, 'read')")
-    fun read(@PathVariable account: Account) = account
-
-    @ResponseBody
-    @GetMapping("/accounts/{account}/write")
-    @PostAuthorize("hasPermission(#account, 'write')")
-    fun write(@PathVariable account: Account) = account
-
-    @ResponseBody
     @GetMapping("/accounts/{account}/admin")
-    @PostAuthorize("hasPermission(#account, 'administration')")
-    fun admin(@PathVariable account: Account) = account
+    @PreAuthorize("hasPermission(#account, 'administration')")
+    fun admin(@ModelAttribute @PathVariable account: Account) = "account"
+
+    @GetMapping("/accounts/{account}/write")
+    @PreAuthorize("hasPermission(#account, 'write')")
+    fun write(@ModelAttribute @PathVariable account: Account) = "account"
+
+    @GetMapping("/accounts/{account}/read")
+    @PreAuthorize("hasPermission(#account, 'read')")
+    fun read(@ModelAttribute @PathVariable account: Account) = "account"
 
 }

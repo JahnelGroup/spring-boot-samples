@@ -37,7 +37,8 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Dashboard</a></li>
+                <li class="active"><a href="/">Checking</a></li>
+                <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -49,53 +50,65 @@
             <h2>ACL Test</h2>
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="/">Checking</a></li>
+                <li><a href="/logout">Logout</a></li>
             </ul><br>
         </div>
         <br>
 
         <div class="col-sm-10">
-            <div class="well">
-                <h4>Create Account</h4>
-                <form class="form-horizontal" action="#" th:action="@{/}" method="post" th:object="${createAccountForm}">
-                    <div class="form-group">
-                        <label for="account-name" class="control-label col-xs-1">Account Name</label>
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control" id="account-name" th:field="*{name}" placeholder="Checking" required th:required="required">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="primary-owner" class="control-label col-xs-1">Primary Owner</label>
-                        <div class="col-xs-6">
-                            <select class="form-control" th:field="*{primaryOwner}" id="primary-owner">
-                                <option th:each="user : ${userRepo.findAll()}" th:value="${user.username}" th:text="${user.username}"></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-1">Joint Owner</label>
-                        <div class="col-xs-6">
-                            <div class="form-check form-check-inline checkbox-inline" th:each="user : ${userRepo.findAll()}">
-                                <input class="form-check-input" type="checkbox" th:id="'joint_' + user.id" th:value="${user.username}" th:field="*{jointOwners}">
-                                <label class="form-check-label" th:for="'joint_' + user.id"><span th:text="${user.username}"></span></label>
+            <div class="row">
+                <div class="col-sm-10">
+                    <div class="well">
+                        <h4>Create Account</h4>
+                        <form class="form-horizontal" action="#" th:action="@{/}" method="post" th:object="${createAccountForm}">
+                            <div class="form-group">
+                                <label for="account-name" class="control-label col-xs-1">Account Name</label>
+                                <div class="col-xs-6">
+                                    <input type="text" class="form-control" id="account-name" th:field="*{name}" placeholder="Checking" required th:required="required">
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-1">Read Only</label>
-                        <div class="col-xs-6">
-                            <div class="form-check form-check-inline checkbox-inline" th:each="user : ${userRepo.findAll()}">
-                                <input class="form-check-input" type="checkbox" th:id="'read_' + user.id" th:value="${user.username}" th:field="*{readOnly}">
-                                <label class="form-check-label" th:for="'read_' + user.id"><span th:text="${user.username}"></span></label>
+                            <div class="form-group">
+                                <label for="primary-owner" class="control-label col-xs-1">Primary Owner</label>
+                                <div class="col-xs-6">
+                                    <select class="form-control" th:field="*{primaryOwner}" id="primary-owner">
+                                        <option th:each="user : ${userRepo.findAll()}" th:value="${user.username}" th:text="${user.username}"></option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-1">Joint Owner</label>
+                                <div class="col-xs-6">
+                                    <div class="form-check form-check-inline checkbox-inline" th:each="user : ${userRepo.findAll()}">
+                                        <input class="form-check-input" type="checkbox" th:id="'joint_' + user.id" th:value="${user.username}" th:field="*{jointOwners}">
+                                        <label class="form-check-label" th:for="'joint_' + user.id"><span th:text="${user.username}"></span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-1">Read Only</label>
+                                <div class="col-xs-6">
+                                    <div class="form-check form-check-inline checkbox-inline" th:each="user : ${userRepo.findAll()}">
+                                        <input class="form-check-input" type="checkbox" th:id="'read_' + user.id" th:value="${user.username}" th:field="*{readOnly}">
+                                        <label class="form-check-label" th:for="'read_' + user.id"><span th:text="${user.username}"></span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <button type="submit" class="btn btn-primary">Create</button>
-                        </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="well">
+                        <h4>User</h4>
+                        <p><span th:text="${userContextService.currentUsername()}"></span></p>
                     </div>
-                </form>
+                </div>
             </div>
+
             <div class="row" th:each="account : ${accountRepo.findAll()}">
                 <div class="col-sm-3">
                     <div class="well">
@@ -105,32 +118,20 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="well">
-                        <h4>Owner (admin)</h4>
+                        <h4><a th:href="'/accounts/'+ ${account.id} + '/admin'">Owner (admin)</a></h4>
                         <p th:each="principal : ${accountService.getUsersByPermission(account.id, 'administration')}"><span th:text="${principal}"></span></p>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="well">
-                        <h4>Joint (write)</h4>
+                        <h4><a th:href="'/accounts/'+ ${account.id} + '/write'">Joint (write)</a></h4>
                         <p th:each="principal : ${accountService.getUsersByPermission(account.id, 'write')}"><span th:text="${principal}"></span></p>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="well">
-                        <h4>Read (read)</h4>
+                        <h4><a th:href="'/accounts/'+ ${account.id} + '/read'">Read (read)</a></h4>
                         <p th:each="principal : ${accountService.getUsersByPermission(account.id, 'read')}"><span th:text="${principal}"></span></p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-8">
-                    <div class="well">
-                        <p>Text</p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="well">
-                        <p>Text</p>
                     </div>
                 </div>
             </div>

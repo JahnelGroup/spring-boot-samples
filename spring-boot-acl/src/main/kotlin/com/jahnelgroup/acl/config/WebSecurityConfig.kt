@@ -44,17 +44,20 @@ class WebSecurityConfig(var dataSource: DataSource) : WebSecurityConfigurerAdapt
         // To debug set breakpoints in JdbcDaoImpl.java
         var jdbcAuth = auth.jdbcAuthentication()
         jdbcAuth.dataSource(dataSource).passwordEncoder(passwordEncoder())
-        jdbcAuth.userDetailsService.setEnableGroups(true)
     }
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.authorizeRequests()
-            .antMatchers("/accounts/*").fullyAuthenticated()
-            .anyRequest().permitAll()
+                .antMatchers("/login*").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
+                .anyRequest().fullyAuthenticated()
         .and()
             .headers().frameOptions().disable() // h2
         .and()
             .csrf().disable()
+        .formLogin()
+            .loginPage("/login.html")
+        .and().exceptionHandling().accessDeniedPage("/accessDenied.html")
     }
 }
