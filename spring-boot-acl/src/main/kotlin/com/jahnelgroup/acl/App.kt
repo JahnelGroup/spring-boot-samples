@@ -6,9 +6,8 @@ import org.springframework.scheduling.annotation.EnableScheduling
 
 @EnableScheduling
 @SpringBootApplication
-class LukoilApplication
+class App
 
 fun main(args: Array<String>) {
-	runApplication<LukoilApplication>(*args)
+	runApplication<App>(*args)
 }
-
