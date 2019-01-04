@@ -1,0 +1,15 @@
+version: "3"
+services:
+
+  jg-redis-cache:
+    image: com.jahnelgroup/jg-redis-cache:0.0.1-SNAPSHOT
+    container_name: jg-redis-cache
+    restart: always
+    depends_on: [redis]
+    ports:
+      - "8080:8080"
+
+  redis:
+    image: redis
+    container_name: redis
+    restart: always

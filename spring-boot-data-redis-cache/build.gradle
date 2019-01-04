@@ -7,6 +7,7 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath('se.transmode.gradle:gradle-docker:1.2')
 	}
 }
 
@@ -14,8 +15,9 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'docker'
 
-group = 'com.example'
+group = 'com.jahnelgroup'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
@@ -23,13 +25,26 @@ repositories {
 	mavenCentral()
 }
 
-
 dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
 	implementation('org.springframework.data:spring-data-redis')
 	implementation('redis.clients:jedis')
 	implementation('org.springframework.boot:spring-boot-starter-web')
-	implementation('org.projectlombok:lombok:1.18.4')
+	compileOnly('org.projectlombok:lombok:1.18.4')
+	annotationProcessor 'org.projectlombok:lombok:1.18.4'
 	runtimeOnly('com.h2database:h2')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
+
+docker {
+	baseImage "java"
+	maintainer 'Steven Zgaljic "szgaljic@jahnelgroup.com"'
+}
+
+task buildDocker(type: Docker, dependsOn: build) {
+	applicationName = "jg-redis-cache"
+	exposePort(8080)
+	addFile("build/libs/demo-0.0.1-SNAPSHOT.jar", "/app.jar")
+	entryPoint(['java', '-jar', '/app.jar'])
+}
+

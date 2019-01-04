@@ -19,7 +19,7 @@ This sample uses [docker](https://docs.docker.com/install/) and [docker-compose]
 This samples uses a gradle plugin to build a docker container around the spring-boot application then launches it together with Redis in a docker-compose file.
 
 ```bash
-$ gradle build buildDocker
+$ gradle buildDocker
 $ docker-compose up 
 ```
 
