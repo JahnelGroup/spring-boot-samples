@@ -1,6 +1,5 @@
 package com.example.api.errors
 
-import org.slf4j.LoggerFactory
 import org.springframework.beans.TypeMismatchException
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
