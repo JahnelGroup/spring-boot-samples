@@ -49,7 +49,7 @@
         <div class="col-sm-2 sidenav hidden-xs">
             <h2>ACL Test</h2>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="/">Checking</a></li>
+                <li class="active"><a href="/">Accounts</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul><br>
         </div>
@@ -59,16 +59,26 @@
             <div class="row">
                 <div class="col-sm-10">
                     <div class="well">
-                        <h4>Create Account</h4>
+                        <h4>Create/Update Account</h4>
                         <form class="form-horizontal" action="#" th:action="@{/}" method="post" th:object="${createAccountForm}">
                             <div class="form-group">
-                                <label for="account-name" class="control-label col-xs-1">Account Name</label>
+                                <label for="account-id" class="control-label col-xs-2">Account ID</label>
+                                <div class="col-xs-6">
+                                    <select class="form-control" th:field="*{accountId}" id="account-id">
+                                        <option th:value="${null}" th:text="New"></option>
+                                        <option th:each="account : ${accountRepo.findAll()}" th:value="${account.id}" th:text="${account.name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="account-name" class="control-label col-xs-2">Account Name</label>
                                 <div class="col-xs-6">
                                     <input type="text" class="form-control" id="account-name" th:field="*{name}" placeholder="Checking" required th:required="required">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="primary-owner" class="control-label col-xs-1">Primary Owner</label>
+                                <label for="primary-owner" class="control-label col-xs-2">Primary Owner</label>
                                 <div class="col-xs-6">
                                     <select class="form-control" th:field="*{primaryOwner}" id="primary-owner">
                                         <option th:each="user : ${userRepo.findAll()}" th:value="${user.username}" th:text="${user.username}"></option>
@@ -76,7 +86,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-xs-1">Joint Owner</label>
+                                <label class="control-label col-xs-2">Joint Owner</label>
                                 <div class="col-xs-6">
                                     <div class="form-check form-check-inline checkbox-inline" th:each="user : ${userRepo.findAll()}">
                                         <input class="form-check-input" type="checkbox" th:id="'joint_' + user.id" th:value="${user.username}" th:field="*{jointOwners}">
@@ -85,7 +95,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-xs-1">Read Only</label>
+                                <label class="control-label col-xs-2">Read Only</label>
                                 <div class="col-xs-6">
                                     <div class="form-check form-check-inline checkbox-inline" th:each="user : ${userRepo.findAll()}">
                                         <input class="form-check-input" type="checkbox" th:id="'read_' + user.id" th:value="${user.username}" th:field="*{readOnly}">
@@ -95,7 +105,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-12">
-                                    <button type="submit" class="btn btn-primary">Create</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
                         </form>

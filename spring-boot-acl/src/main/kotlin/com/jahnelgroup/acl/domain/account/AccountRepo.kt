@@ -1,5 +1,7 @@
 package com.jahnelgroup.acl.domain.account
 
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.repository.CrudRepository
 
-interface AccountRepo : JpaRepository<Account, Long>
+interface AccountRepo : CrudRepository<Account, Long>{
+    override fun findAll(): List<Account>
+}

@@ -1,3 +1,7 @@
+### Gradle ###
+/build/
+.gradle
+
 ### Maven ###
 target/
 /out/

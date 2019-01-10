@@ -1,5 +1,6 @@
 package com.jahnelgroup.acl.domain
 
+import com.jahnelgroup.springframework.security.acl.annotations.AclObjectId
 import org.springframework.data.annotation.*
 import org.springframework.data.annotation.Version
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -13,8 +14,8 @@ abstract class AbstractEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @AclObjectId
     var id: Long? = null
-        private set
 
     @CreatedBy
     @Column(nullable = false, updatable = false)

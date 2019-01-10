@@ -26,52 +26,52 @@ class AccountService(
     fun save(account: Account): Account {
         var e = accountRepo.save(account)
 
-        // Object Instance
-        val oi = ObjectIdentityImpl(e::class.java, e.id)
-
-        // ACL
-        var acl: MutableAcl? = null
-        try {
-            acl = aclService.readAclById(oi) as MutableAcl
-        } catch (nfe: NotFoundException) {
-            acl = aclService.createAcl(oi)
-        }
-
-        //
-        // ACE: Primary Owner
-        //
-        val sid = PrincipalSid(account.primaryOwner!!.username)
-        acl!!.let {
-            it.insertAce(it.entries.size, BasePermission.READ, sid, true)
-            it.insertAce(it.entries.size, BasePermission.WRITE, sid, true)
-            it.insertAce(it.entries.size, BasePermission.CREATE, sid, true)
-            it.insertAce(it.entries.size, BasePermission.DELETE, sid, true)
-            it.insertAce(it.entries.size, BasePermission.ADMINISTRATION, sid, true)
-        }
-
-        //
-        // ACE: Joint Owners
-        //
-        account.jointOwners.forEach {
-            val sid = PrincipalSid(it.username)
-
-            acl.let {
-                it.insertAce(it.entries.size, BasePermission.READ, sid, true)
-                it.insertAce(it.entries.size, BasePermission.WRITE, sid, true)
-            }
-        }
-
-        //
-        // ACE: Read Only
-        //
-        account.readOnly.forEach {
-            val sid = PrincipalSid(it.username)
-            acl.let {
-                it.insertAce(it.entries.size, BasePermission.READ, sid, true)
-            }
-        }
-
-        aclService.updateAcl(acl)
+//        // Object Instance
+//        val oi = ObjectIdentityImpl(e::class.java, e.id)
+//
+//        // ACL
+//        var acl: MutableAcl? = null
+//        try {
+//            acl = aclService.readAclById(oi) as MutableAcl
+//        } catch (nfe: NotFoundException) {
+//            acl = aclService.createAcl(oi)
+//        }
+//
+//        //
+//        // ACE: Primary Owner
+//        //
+//        val sid = PrincipalSid(account.primaryOwner!!.username)
+//        acl!!.let {
+//            it.insertAce(it.entries.size, BasePermission.READ, sid, true)
+//            it.insertAce(it.entries.size, BasePermission.WRITE, sid, true)
+//            it.insertAce(it.entries.size, BasePermission.CREATE, sid, true)
+//            it.insertAce(it.entries.size, BasePermission.DELETE, sid, true)
+//            it.insertAce(it.entries.size, BasePermission.ADMINISTRATION, sid, true)
+//        }
+//
+//        //
+//        // ACE: Joint Owners
+//        //
+//        account.jointOwners.forEach {
+//            val sid = PrincipalSid(it.username)
+//
+//            acl.let {
+//                it.insertAce(it.entries.size, BasePermission.READ, sid, true)
+//                it.insertAce(it.entries.size, BasePermission.WRITE, sid, true)
+//            }
+//        }
+//
+//        //
+//        // ACE: Read Only
+//        //
+//        account.readOnly.forEach {
+//            val sid = PrincipalSid(it.username)
+//            acl.let {
+//                it.insertAce(it.entries.size, BasePermission.READ, sid, true)
+//            }
+//        }
+//
+//        aclService.updateAcl(acl)
 
         return e
     }

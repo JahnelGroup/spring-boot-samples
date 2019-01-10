@@ -5,7 +5,6 @@ import com.jahnelgroup.acl.domain.account.AccountRepo
 import com.jahnelgroup.acl.domain.user.UserRepo
 import com.jahnelgroup.acl.service.account.AccountService
 import com.jahnelgroup.acl.service.context.UserContextService
-import org.springframework.security.access.prepost.PostAuthorize
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -27,17 +26,19 @@ class AccountController(
     @GetMapping("/")
     fun get(model: Model): String{
         model.addAttribute("createAccountForm", CreateAccountForm())
+//        model.addAttribute("accounts", accountRepo.findAll().map { it.id to it }.toMap())
         return "home"
     }
 
     @PostMapping("/")
     fun post(model: Model, @ModelAttribute(value="createAccountForm") createAccountForm: CreateAccountForm): String{
-
         var account = Account().apply {
+            if( createAccountForm.accountId != null )
+                id = createAccountForm.accountId
             name = createAccountForm.name
             primaryOwner = userRepo.findByUsername(createAccountForm.primaryOwner!!).get()
-            jointOwners = createAccountForm.jointOwners.asSequence().map { userRepo.findByUsername(it).get() }.toSet()
-            readOnly = createAccountForm.readOnly.asSequence().map { userRepo.findByUsername(it).get() }.toSet()
+            jointOwners = createAccountForm.jointOwners.asSequence().map { userRepo.findByUsername(it).get() }.toMutableSet()
+            readOnly = createAccountForm.readOnly.asSequence().map { userRepo.findByUsername(it).get() }.toMutableSet()
         }
 
         userContextService.impersonateUser(account.primaryOwner!!) // pretend to be the account owner.
