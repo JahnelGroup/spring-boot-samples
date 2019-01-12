@@ -1,6 +1,7 @@
 package com.jahnelgroup.acl.domain
 
 import com.jahnelgroup.springframework.security.acl.annotations.AclObjectId
+import com.jahnelgroup.springframework.security.acl.annotations.data.jpa.domain.support.AclSecuredEntityListener
 import org.springframework.data.annotation.*
 import org.springframework.data.annotation.Version
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -9,7 +10,7 @@ import javax.persistence.*
 import javax.persistence.Id
 
 @MappedSuperclass
-@EntityListeners(value = [AuditingEntityListener::class])
+@EntityListeners(value = [AuditingEntityListener::class, AclSecuredEntityListener::class])
 abstract class AbstractEntity{
 
     @Id

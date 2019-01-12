@@ -2,6 +2,7 @@
 
 package com.jahnelgroup.acl.config.acl
 
+import com.jahnelgroup.springframework.security.acl.annotations.data.jpa.repository.config.EnableAclSecured
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import javax.sql.DataSource
@@ -24,6 +25,7 @@ import org.springframework.security.config.annotation.method.configuration.Globa
  *      https://www.youtube.com/watch?v=epsRNx6PSAM&list=PLGXpHMFOMTTbCC4t6WSoKfVnUxHmyGXKJ&index=46
  */
 @Configuration
+@EnableAclSecured
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 class AclConfig(
         private var dataSource: DataSource
