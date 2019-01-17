@@ -76,6 +76,27 @@ class AccountService(
         return e
     }
 
+    fun getPermissionDisplay(id: Long): String =
+            aclService.readAclById(ObjectIdentityImpl(Account::class.java, id)).entries
+                .groupBy( {it.sid} )
+                .map {
+                    var sid = it.key!!
+                    var sidDisplay = if( sid is PrincipalSid ) sid.principal
+                        else (sid as GrantedAuthoritySid).grantedAuthority
+
+                    var permissions = it.value.joinToString("") {
+                        when(permissionFactory.buildFromMask(it.permission.mask)){
+                            BasePermission.ADMINISTRATION -> "A"
+                            BasePermission.WRITE -> "W"
+                            BasePermission.READ -> "R"
+                            else -> throw RuntimeException("Unexpected Permission ${it.permission.mask}")
+                        }
+                    }
+
+                    "${sidDisplay}:$permissions"
+                }.joinToString(", ")
+
+
     fun getUsersByPermission(id: Long, permission: String): Set<String> {
         var users = mutableSetOf<String>()
         val oi = ObjectIdentityImpl(Account::class.java, id)

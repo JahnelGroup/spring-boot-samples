@@ -15,6 +15,9 @@ import java.sql.SQLException
 import java.io.IOException
 import javax.annotation.PostConstruct
 
+/**
+ * The introduction of Spring ACL cause the auto-magic loading of data.sql to stop.
+ */
 @AutoConfigureAfter(DataSourceAutoConfiguration::class)
 @Configuration
 class InitializationAutoConfig(
