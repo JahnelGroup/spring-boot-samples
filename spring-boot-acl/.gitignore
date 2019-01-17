@@ -1,6 +1,6 @@
 ### Gradle ###
 /build/
-.gradle
+.gradle/
 
 ### Maven ###
 target/
