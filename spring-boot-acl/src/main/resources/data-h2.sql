@@ -1,11 +1,3 @@
-/*
- * This table serves a dual purpose to store information about either principals or
- * role/authority. If the this entry is for a user then the principal column would be
- * set to true.
- *
- * principal = true if the entry is for a user, false if for a role or authority
- * sid = Security Identifier (i.e, username if principal is true)
- */
 CREATE TABLE IF NOT EXISTS acl_sid (
   id bigint(20) NOT NULL AUTO_INCREMENT,
   principal tinyint(1) NOT NULL,
@@ -14,11 +6,6 @@ CREATE TABLE IF NOT EXISTS acl_sid (
   UNIQUE KEY unique_uk_1 (sid,principal)
 );
 
-/*
- * This table stores a list of objects that are protected by an ACL.
-
- * class = fully qualified classname of an entity being protected
- */
 CREATE TABLE IF NOT EXISTS acl_class (
   id bigint(20) NOT NULL AUTO_INCREMENT,
   class varchar(255) NOT NULL,
@@ -26,18 +13,6 @@ CREATE TABLE IF NOT EXISTS acl_class (
   UNIQUE KEY unique_uk_2 (class)
 );
 
-/*
- * This table store all the Access Control Entries (ACE's). It details the role
- * needed to access a particular object.
- *
- * acl_object_identity = primary key of the object instance being protected
- * ace_order = precesdnece order
- * sid = user or role/authority owning the entity
- * mask = admin/write/read
- * granting = always set to true for auditing. TBD.
- * audit_success = always set to true for auditing. TBD.
- * audit_failure = always set to true for auditing. TBD.
- */
 CREATE TABLE IF NOT EXISTS acl_entry (
   id bigint(20) NOT NULL AUTO_INCREMENT,
   acl_object_identity bigint(20) NOT NULL,
@@ -51,16 +26,6 @@ CREATE TABLE IF NOT EXISTS acl_entry (
   UNIQUE KEY unique_uk_4 (acl_object_identity,ace_order)
 );
 
-/*
- * Similar to acl_class but stores information related to a specific instance
- * of a class that is being protected.
- *
- * object_id_class = references id of the class from acl_class
- * object_id_identity = primary key of the object instance being protected
- * parent_object = links to the parent of this object (if it exists) .. TBD..
- * owner_sid = user or role/authority owning the entity
- * entries_inheriting = TBD...
- */
 CREATE TABLE IF NOT EXISTS acl_object_identity (
   id bigint(20) NOT NULL AUTO_INCREMENT,
   object_id_class bigint(20) NOT NULL,
@@ -91,13 +56,37 @@ ALTER TABLE acl_object_identity
 ADD FOREIGN KEY (owner_sid) REFERENCES acl_sid (id);
 
 insert into users(username, password, enabled) values
-('Steven' , '$2a$12$PD9BYaK1yxzPwDww60UG.OIWbc1mp/uV9tNPpdgrRt5vnxz1OhpCq', true), -- pass
-('Darrin' , '$2a$12$PD9BYaK1yxzPwDww60UG.OIWbc1mp/uV9tNPpdgrRt5vnxz1OhpCq', true), -- pass
-('Jason'  , '$2a$12$PD9BYaK1yxzPwDww60UG.OIWbc1mp/uV9tNPpdgrRt5vnxz1OhpCq', true), -- pass
-('Jon'    , '$2a$12$PD9BYaK1yxzPwDww60UG.OIWbc1mp/uV9tNPpdgrRt5vnxz1OhpCq', true); -- pass
+('admin'  , '$2a$12$PD9BYaK1yxzPwDww60UG.OIWbc1mp/uV9tNPpdgrRt5vnxz1OhpCq', true), -- pass
+('steven' , '$2a$12$PD9BYaK1yxzPwDww60UG.OIWbc1mp/uV9tNPpdgrRt5vnxz1OhpCq', true), -- pass
+('darrin' , '$2a$12$PD9BYaK1yxzPwDww60UG.OIWbc1mp/uV9tNPpdgrRt5vnxz1OhpCq', true), -- pass
+('jason'  , '$2a$12$PD9BYaK1yxzPwDww60UG.OIWbc1mp/uV9tNPpdgrRt5vnxz1OhpCq', true), -- pass
+('jon'    , '$2a$12$PD9BYaK1yxzPwDww60UG.OIWbc1mp/uV9tNPpdgrRt5vnxz1OhpCq', true); -- pass
 
 insert into authorities (username, authority) values
-('Steven' , 'ROLE_USER'),
-('Darrin' , 'ROLE_USER'),
-('Jason'  , 'ROLE_USER'),
-('Jon'    , 'ROLE_USER');
+('admin'  , 'ROLE_ADMIN'),
+('steven' , 'ROLE_USER'),
+('darrin' , 'ROLE_USER'),
+('jason'  , 'ROLE_USER'),
+('jon'    , 'ROLE_USER');
+
+insert into groups(id, group_name) values
+(1, 'Admins'),
+(2, 'Users');
+
+insert into group_authorities(group_id, authority) values
+(1, 'ROLE_ADMIN'),
+(2, 'ROLE_USER');
+
+insert into group_members(id, username, group_id) values
+-- Admins
+(1, 'steven', 1),
+-- Users
+(2, 'steven', 2),
+(3, 'darrin', 2),
+(4, 'jason' , 2),
+(5, 'jon'   , 2);
+
+-- insert into banks(id, name, created_by, created_datetime, last_modified_by, last_modified_datetime, version) values
+-- (1, 'JP Morgan Chase', 'admin', CURRENT_TIMESTAMP(), 'admin', CURRENT_TIMESTAMP(), 0),
+-- (2, 'Bank of America', 'admin', CURRENT_TIMESTAMP(), 'admin', CURRENT_TIMESTAMP(), 0),
+-- (3, 'Wells Fargo', 'admin', CURRENT_TIMESTAMP(), 'admin', CURRENT_TIMESTAMP(), 0);

@@ -51,7 +51,7 @@ class WebSecurityConfig(var dataSource: DataSource) : WebSecurityConfigurerAdapt
         http.authorizeRequests()
                 .antMatchers("/login*").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-                .anyRequest().fullyAuthenticated()
+                .anyRequest().permitAll()
         .and()
             .headers().frameOptions().disable() // h2
         .and()

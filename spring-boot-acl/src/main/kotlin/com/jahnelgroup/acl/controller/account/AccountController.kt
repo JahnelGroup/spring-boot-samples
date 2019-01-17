@@ -24,13 +24,18 @@ class AccountController(
     @ModelAttribute fun userContextService() = userContextService
 
     @GetMapping("/")
-    fun get(model: Model): String{
-        model.addAttribute("createAccountForm", CreateAccountForm())
-//        model.addAttribute("accounts", accountRepo.findAll().map { it.id to it }.toMap())
+    fun home(model: Model): String{
         return "home"
     }
 
-    @PostMapping("/")
+    @GetMapping("/createAccount")
+    fun createAccount(model: Model): String{
+        model.addAttribute("createAccountForm", CreateAccountForm())
+        model.addAttribute("content", "createAccount")
+        return "home"
+    }
+
+    @PostMapping("/createAccount")
     fun post(model: Model, @ModelAttribute(value="createAccountForm") createAccountForm: CreateAccountForm): String{
         var account = Account().apply {
             if( createAccountForm.accountId != null )
