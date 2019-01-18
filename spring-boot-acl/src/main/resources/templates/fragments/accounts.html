@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <div th:fragment="list">
+        <h1>Welcome, Steven</h1>
+        <form action="/createAccount">
+            <p class="lead"><button type="submit" class="btn btn-primary">Create New</button></p>
+        </form>
+
+        <div th:switch="${#lists.isEmpty(accountRepo.findAll())}">
+            <table th:case="false" class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Bank</th>
+                    <th scope="col">Account</th>
+                    <th scope="col">Permissions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="account : ${accountRepo.findAll()}">
+                    <th scope="row">1</th>
+                    <td>Bank</td>
+                    <td><span th:text="${account.name}"></span></td>
+                    <td><span th:text="${accountService.getPermissionDisplay(account.id)}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+            <p th:case="true">No accounts.</p>
+        </div>
+
+
+    </div>
+
+    <div th:fragment="create">
+        <h4>Create/Update Account</h4>
+        <form class="form-horizontal" action="#" th:action="@{/createAccount}" method="post" th:object="${createAccountForm}">
+            <div class="form-group">
+                <label for="account-id" class="control-label col-xs-2">Account ID</label>
+                <div class="col-xs-6">
+                    <select class="form-control" th:field="*{accountId}" id="account-id">
+                        <option th:value="${null}" th:text="New"></option>
+                        <option th:each="account : ${accountRepo.findAll()}" th:value="${account.id}" th:text="${account.name}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="account-name" class="control-label col-xs-2">Account Name</label>
+                <div class="col-xs-6">
+                    <input type="text" class="form-control" id="account-name" th:field="*{name}" placeholder="Checking" required th:required="required">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="primary-owner" class="control-label col-xs-2">Primary Owner</label>
+                <div class="col-xs-6">
+                    <select class="form-control" th:field="*{primaryOwner}" id="primary-owner">
+                        <option th:each="user : ${userRepo.findAll()}" th:value="${user.username}" th:text="${user.username}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-2">Joint Owner</label>
+                <div class="col-xs-6">
+                    <div class="form-check form-check-inline checkbox-inline" th:each="user : ${userRepo.findAll()}">
+                        <input class="form-check-input" type="checkbox" th:id="'joint_' + user.id" th:value="${user.username}" th:field="*{jointOwners}">
+                        <label class="form-check-label" th:for="'joint_' + user.id"><span th:text="${user.username}"></span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-2">Read Only</label>
+                <div class="col-xs-6">
+                    <div class="form-check form-check-inline checkbox-inline" th:each="user : ${userRepo.findAll()}">
+                        <input class="form-check-input" type="checkbox" th:id="'read_' + user.id" th:value="${user.username}" th:field="*{readOnly}">
+                        <label class="form-check-label" th:for="'read_' + user.id"><span th:text="${user.username}"></span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</html>

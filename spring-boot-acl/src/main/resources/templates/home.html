@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Starter Template · Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/dist/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        body {
+            padding-top: 5rem;
+        }
+
+    </style>
+    <!--<link href="starter-template.css" rel="stylesheet">-->
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<main role="main" class="container">
+
+    <div class="starter-template">
+        <div th:switch="${content}">
+            <div th:case="createAccount">
+                <div th:replace="fragments/accounts :: create"></div>
+            </div>
+            <div th:case="*">
+                <div th:replace="fragments/accounts :: list"></div>
+            </div>
+        </div>
+    </div>
+
+</main><!-- /.container -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/dist/js/bootstrap.bundle.js" crossorigin="anonymous"></script></body>
+</html>
