@@ -1,5 +1,15 @@
 # Spring Boot ACL 
 
+## spring-security-acl-annotations
+
+This sample requires [spring-security-acl-annotations](https://github.com/JahnelGroup/spring-security-acl-annotations) which hasn't been published to any repository yet. Pull down that repo and then install to you local maven repo.
+
+```bash
+$ git clone git@github.com:JahnelGroup/spring-security-acl-annotations.git
+$ cd spring-security-acl-annotations
+$ mvn clean install
+``` 
+
 ## Start
 
 ```bash
