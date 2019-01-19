@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "accounts")
+@AclSecured
 data class Account(
 
         @field:NotNull
@@ -23,7 +24,7 @@ data class Account(
         @field:OneToOne
         var primaryOwner: User? = null,
 
-        @AclAce(permissions = ["write", "read"], sid = AclSid(principal = false))
+        @AclAce(permissions = ["write", "read"])
         @field:ManyToMany
         var jointOwners: MutableSet<User> = mutableSetOf(),
 
