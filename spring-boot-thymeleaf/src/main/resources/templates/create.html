@@ -6,7 +6,7 @@
 <body>
 <h1>Create Todo List</h1>
 <button type="submit"><a href="/index">View all Todo</a></button>
-<form th:action="@{/create}" method="post" th:object="${todo}">
+<form th:action="@{/save}" method="post" th:object="${todo}">
     <p>Todo title: </p>
     <input name="todoTitle" type="text">
     <p>Todo description: </p>

@@ -1,18 +1,19 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Todo</title>
+</head>
+<body>
+<h1>Edit Todo</h1>
+<button type="submit"><a href="/index">View all Todo</a></button>
+<form th:action="@{/save}" method="post" th:object="${todo}">
+    <p>Todo title: </p>
+    <input name="todoTitle" type="text" th:value="${todo.todoTitle}">
+    <p>Todo description: </p>
+    <input name="todoDescription" type="text" th:value="${todo.todoDescription}">
+    <br>
+    <input type="hidden" name="id" th:value="${todo.id}">
+    <input type="submit" name="submit" value="submit">
+</form>
+</body>
+</html>

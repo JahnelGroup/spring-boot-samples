@@ -17,7 +17,7 @@ class TodoApplication(var todoRepo: TodoRepo){
 	fun index() = "index"
 
 	@RequestMapping(method = [GET, POST])
-	fun create(model: Model, req: HttpServletRequest, @ModelAttribute todo: Todo?): String{
+	fun save(model: Model, req: HttpServletRequest, @ModelAttribute todo: Todo?): String{
 		if( req.method == RequestMethod.POST.name ){
 			todoRepo.save(todo!!)
 			return "index"
@@ -26,9 +26,25 @@ class TodoApplication(var todoRepo: TodoRepo){
 		return "create"
 	}
 
+	@GetMapping("/delete")
+	fun delete(id: Int): String{
+		todoRepo.deleteById(id)
+		return "index"
+	}
+
+	@GetMapping("/detail")
+	fun detail(model: Model, id: Int): String{
+		model.addAttribute("todo", todoRepo.deleteById(id))
+		return "detail"
+	}
+
+	@GetMapping("/edit")
+	fun edit(model: Model, id: Int): String{
+		model.addAttribute("todo", todoRepo.findById(id).get())
+		return "edit"
+	}
 }
 
 fun main(args: Array<String>) {
 	runApplication<TodoApplication>(*args)
 }
-
