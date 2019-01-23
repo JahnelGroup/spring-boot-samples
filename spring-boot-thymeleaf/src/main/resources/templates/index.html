@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>my todos</title>
+</head>
+<body>
+<h2>
+    Next on my agenda
+</h2>
+<p><a href="/create">add todo</a></p>
+<ul th:each="todo : ${todoRepo.findAll()}">
+    <li><a th:href="'/detail?id='+${todo.id}"/><span th:text="${todo.todoTitle}"/></li>
+    <button type="button"><a th:href="'edit.php?id='+${todo.id}">Edit</a></button>
+    <button type="button"><a th:href="'delete.php?id='+${todo.id}">Delete</a></button>
+</ul>
+</body>
+</html>
