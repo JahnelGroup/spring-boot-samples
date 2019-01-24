@@ -2,15 +2,18 @@ buildscript {
 	ext {
 		kotlinVersion = '1.2.71'
 		springBootVersion = '2.1.2.RELEASE'
+		gradleDockerComposeVersion = '0.8.13'
 	}
 	repositories {
 		mavenCentral()
+		jcenter()
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
 		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
 		classpath("org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}")
+		classpath "com.avast.gradle:gradle-docker-compose-plugin:${gradleDockerComposeVersion}"
 	}
 }
 
@@ -19,6 +22,7 @@ apply plugin: 'kotlin-spring'
 apply plugin: 'kotlin-jpa'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'docker-compose'
 
 group = 'com.jahnelgroup'
 version = '0.0.1-SNAPSHOT'
@@ -52,3 +56,5 @@ compileTestKotlin {
 		jvmTarget = '1.8'
 	}
 }
+
+composeUp.dependsOn build

@@ -9,7 +9,7 @@
 </h2>
 <p><a href="/create">add todo</a></p>
 <ul th:each="todo : ${todoRepo.findAll()}">
-    <li><a th:href="'/detail?id='+${todo.id}"/><span th:text="${todo.todoTitle}"/></li>
+    <li><a th:href="'/detail?id='+${todo.id}"/><span th:text="${todo.todoTitle} + ' ' + ${todo.date}"/></li>
     <button type="button"><a th:href="'/edit?id='+${todo.id}">Edit</a></button>
     <button type="button"><a th:href="'/delete?id='+${todo.id}">Delete</a></button>
 </ul>
