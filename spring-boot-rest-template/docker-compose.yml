@@ -1,0 +1,19 @@
+version: "3"
+services:
+
+  jg-rest-tempate-1:
+    image: com.jahnelgroup/jg-rest-template:0.0.1-SNAPSHOT
+    container_name: jg-rest-tempate-1
+    restart: always
+    networks: [jgresttemplate]
+    command: --instance-id=jg-rest-tempate-1 --hello-host=jg-rest-tempate-2:8080
+
+  jg-rest-tempate-2:
+    image: com.jahnelgroup/jg-rest-template:0.0.1-SNAPSHOT
+    container_name: jg-rest-tempate-2
+    restart: always
+    networks: [jgresttemplate]
+    command: --instance-id=jg-rest-tempate-2 --hello-host=jg-rest-tempate-1:8080
+
+networks:
+  jgresttemplate:

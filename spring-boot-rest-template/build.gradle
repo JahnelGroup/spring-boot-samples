@@ -1,0 +1,50 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.2.RELEASE'
+		gradleDockerVersion = '1.2'
+		gradleDockerComposeVersion = '0.8.13'
+	}
+	repositories {
+		mavenCentral()
+		jcenter() // gradle-docker-compose-plugin
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("se.transmode.gradle:gradle-docker:${gradleDockerVersion}")
+		classpath "com.avast.gradle:gradle-docker-compose-plugin:${gradleDockerComposeVersion}"
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'docker'
+apply plugin: 'docker-compose'
+
+group = 'com.jahnelgroup'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+
+docker {
+	baseImage "java"
+	maintainer 'Steven Zgaljic "szgaljic@jahnelgroup.com"'
+}
+
+task buildDocker(type: Docker) {
+	applicationName = "jg-rest-template"
+	exposePort(8080)
+	exposePort(8081)
+	addFile("build/libs/resttemplate-0.0.1-SNAPSHOT.jar", "/app.jar")
+	entryPoint(['java', '-jar', '/app.jar'])
+}
+
+buildDocker.dependsOn build
+composeUp.dependsOn buildDocker

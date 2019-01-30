@@ -15,7 +15,7 @@ The overall file structure is as follows:
 ```text
 /spring-boot-thymeleaf/
 ├── src/main
-│   └── com/jahnelgroup/todo
+│   └── kotlin/com/jahnelgroup/
 │       └── App.kt
 │   └── resources
 │       └── templates
