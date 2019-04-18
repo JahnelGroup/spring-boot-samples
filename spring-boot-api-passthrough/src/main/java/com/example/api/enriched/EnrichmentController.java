@@ -16,7 +16,12 @@ public class EnrichmentController {
 
     @PostMapping("/")
     public EnrichedEntity enrich(@RequestBody EnrichmentRequest enrichmentRequest){
-        return enrichmentService.enrich(enrichmentRequest);
+        EnrichedEntity request = enrichmentService.createRequest(enrichmentRequest);
+
+        // async
+        enrichmentService.doAsyncEnrichment(request);
+
+        return request;
     }
 
     @GetMapping("/{id}")

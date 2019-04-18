@@ -8,9 +8,9 @@ import java.util.Objects;
 @Entity
 public class EnrichedEntity {
 
-    public static enum EnrichedEntityStatus {
+    public enum EnrichedEntityStatus {
         SUBMITTED,
-        COMPLETE,
+        SUCCESS,
         FAILURE
     }
 
@@ -20,6 +20,8 @@ public class EnrichedEntity {
 
     @ElementCollection
     private List<String> cityStates = new ArrayList<>();
+
+    private Integer zipCode;
 
     private EnrichedEntityStatus enrichmentStatus;
 
@@ -35,13 +37,16 @@ public class EnrichedEntity {
         return enrichmentStatus;
     }
 
-    @Override
-    public String toString() {
-        return "EnrichedEntity{" +
-                "id=" + id +
-                ", cityStates=" + cityStates +
-                ", enrichmentStatus=" + enrichmentStatus +
-                '}';
+    public void setEnrichmentStatus(EnrichedEntityStatus enrichmentStatus) {
+        this.enrichmentStatus = enrichmentStatus;
+    }
+
+    public Integer getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(Integer zipCode) {
+        this.zipCode = zipCode;
     }
 
     @Override
@@ -51,17 +56,25 @@ public class EnrichedEntity {
         EnrichedEntity that = (EnrichedEntity) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(cityStates, that.cityStates) &&
+                Objects.equals(zipCode, that.zipCode) &&
                 enrichmentStatus == that.enrichmentStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cityStates, enrichmentStatus);
+        return Objects.hash(id, cityStates, zipCode, enrichmentStatus);
     }
 
-    public void setEnrichmentStatus(EnrichedEntityStatus enrichmentStatus) {
-        this.enrichmentStatus = enrichmentStatus;
+    @Override
+    public String toString() {
+        return "EnrichedEntity{" +
+                "id=" + id +
+                ", cityStates=" + cityStates +
+                ", enrichmentStatus=" + enrichmentStatus +
+                ", zipCode=" + zipCode +
+                '}';
     }
+
 
     public List<String> getCityStates() {
         return cityStates;

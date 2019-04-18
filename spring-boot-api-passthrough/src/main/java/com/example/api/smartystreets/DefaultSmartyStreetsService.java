@@ -28,13 +28,13 @@ public class DefaultSmartyStreetsService implements SmartyStreetsService {
     }
 
     @Override
-    public List<CityState> fetchCityStates(EnrichmentRequest enrichmentRequest) {
+    public List<CityState> fetchCityStatesByZipCode(Integer zipCode) {
         RestTemplate restTemplate = new RestTemplate();
         ObjectMapper objectMapper = new ObjectMapper();
 
         // TODO: use urivariables for expansion instead of string concat
         ResponseEntity<List<SmartyStreetsResponse>> resp = restTemplate.exchange(
-                BASE_URL + "&zipcode=" + enrichmentRequest.getZipCode(),
+                BASE_URL + "&zipcode=" + zipCode,
                 HttpMethod.GET,
                 null, // requestEntity
                 new ParameterizedTypeReference<List<SmartyStreetsResponse>>() {
