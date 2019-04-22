@@ -120,3 +120,28 @@ Transfer-Encoding: chunked
     "zipCode": 0
 }
 ```
+
+## Mocking the req/response to SmartyStreets
+
+Perhaps you want to provide this service to someone quickly so they can build out the request/response to your system while you're still working on down stream integration (i.e., SmartyStreets). We can leverage Spring [Profiles](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html) in this scenario and define two types of beans.
+
+In this sample we've defined one interface [SmartyStreetsService](./src/main/java/com/example/api/smartystreets/SmartyStreetsService.java) with two implementations [DefaultSmartyStreetsService]((./src/main/java/com/example/api/smartystreets/DefaultSmartyStreetsService.java)) which actually makes a REST call and [MockSmartyStreetsService](./src/main/java/com/example/api/smartystreets/MockSmartyStreetsService.java) which looks up data from a local [data.json](./src/main/resources/json/data.json) file.
+
+```java
+@Profile("!mock")
+@Component
+public class DefaultSmartyStreetsService implements SmartyStreetsService{}
+
+@Profile("mock")
+@Component
+public class MockSmartyStreetsService implements SmartyStreetsService{}
+```
+
+We control the loading of these two components by passing in a profile. 
+
+```java
+$ gradle build
+$ java -Dspring.profiles.active=mock -jar build/libs/api-0.0.1-SNAPSHOT.jar 
+```
+
+If running through an IDE you must configure it to pass `-Dspring.profiles.active=mock` as a VM option in for you.
