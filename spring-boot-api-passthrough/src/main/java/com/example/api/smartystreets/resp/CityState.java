@@ -6,6 +6,13 @@ public class CityState {
 
     private String city;
 
+    // default constructor needed for JPA
+    public CityState(){}
+
+    public CityState(String city){
+        this.city = city;
+    }
+
     public String getCity() {
         return city;
     }

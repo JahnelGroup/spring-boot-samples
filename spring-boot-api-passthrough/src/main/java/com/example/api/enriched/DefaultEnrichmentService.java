@@ -39,10 +39,14 @@ public class DefaultEnrichmentService implements EnrichmentService {
 
         logger.info("Async enrichment - start = {}", enrichedEntity);
 
-        // Pretend to take time
-        simulateLatency();
+        List<CityState> cityStates = null;
 
-        List<CityState> cityStates = smartyStreetsService.fetchCityStatesByZipCode(enrichedEntity.getZipCode());
+        try{
+            cityStates = smartyStreetsService.fetchCityStatesByZipCode(enrichedEntity.getZipCode());
+        }catch(Exception e){
+            logger.error("Failed to enrich from SmartyStreets", e);
+            // TODO: We should be saving the reason for the failure on the EnrichedEntity
+        }
 
         if( cityStates == null || cityStates.isEmpty() ){
             enrichedEntity.setEnrichmentStatus(EnrichedEntity.EnrichedEntityStatus.FAILURE);
@@ -63,11 +67,4 @@ public class DefaultEnrichmentService implements EnrichmentService {
         return enrichedEntity;
     }
 
-    private void simulateLatency() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 }
