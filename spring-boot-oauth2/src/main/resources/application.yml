@@ -1,0 +1,11 @@
+api-name: api
+
+client:
+    name: in-memory
+    secret: super_secret_password
+
+token-validity-length: 86400
+
+jks:
+    file-name: super_secret_key_store
+    secret: another_super_secret_password

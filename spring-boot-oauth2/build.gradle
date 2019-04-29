@@ -1,0 +1,28 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.4.RELEASE'
+	id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.jahnelgroup.oauth2'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.security:spring-security-jwt:1.0.9.RELEASE')
+	compile('org.springframework.security:spring-security-oauth2-core')
+	compile('org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure')
+	compile('org.springframework.cloud:spring-cloud-starter-oauth2:2.0.0.RELEASE')
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.flywaydb:flyway-core'
+	runtimeOnly 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+}
