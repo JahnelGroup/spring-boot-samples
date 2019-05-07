@@ -1,10 +1,21 @@
 package com.example.api.enriched;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.example.api.enriched.EnrichedEntity.EnrichedEntityStatus.FAILURE;
+import static com.example.api.enriched.EnrichedEntity.EnrichedEntityStatus.SUCCESS;
+
+/**
+ * Primary data model that represents a piece of asynchronous work with the requested data,
+ * calculated data (fetch data from SmartyStreets), in addition to timestamp and statues.
+ */
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Entity
 public class EnrichedEntity {
 
@@ -13,6 +24,10 @@ public class EnrichedEntity {
         SUCCESS,
         FAILURE
     }
+
+    //
+    // Properties
+    //
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +38,16 @@ public class EnrichedEntity {
 
     private Integer zipCode;
 
+    @Enumerated(EnumType.STRING)
     private EnrichedEntityStatus enrichmentStatus;
+
+    private Instant submissionDateTime = null;
+    private Instant enrichmentDateTime = null;
+    private Instant responseDateTime = null;
+
+    //
+    // Getters and Setters
+    //
 
     public Long getId() {
         return id;
@@ -33,12 +57,12 @@ public class EnrichedEntity {
         this.id = id;
     }
 
-    public EnrichedEntityStatus getEnrichmentStatus() {
-        return enrichmentStatus;
+    public List<String> getCityStates() {
+        return cityStates;
     }
 
-    public void setEnrichmentStatus(EnrichedEntityStatus enrichmentStatus) {
-        this.enrichmentStatus = enrichmentStatus;
+    public void setCityStates(List<String> cityStates) {
+        this.cityStates = cityStates;
     }
 
     public Integer getZipCode() {
@@ -49,6 +73,75 @@ public class EnrichedEntity {
         this.zipCode = zipCode;
     }
 
+    public EnrichedEntityStatus getEnrichmentStatus() {
+        return enrichmentStatus;
+    }
+
+    public void setEnrichmentStatus(EnrichedEntityStatus enrichmentStatus) {
+        this.enrichmentStatus = enrichmentStatus;
+    }
+
+    public Instant getSubmissionDateTime() {
+        return submissionDateTime;
+    }
+
+    public void setSubmissionDateTime(Instant submissionDateTime) {
+        this.submissionDateTime = submissionDateTime;
+    }
+
+    public Instant getEnrichmentDateTime() {
+        return enrichmentDateTime;
+    }
+
+    public void setEnrichmentDateTime(Instant enrichmentDateTime) {
+        this.enrichmentDateTime = enrichmentDateTime;
+    }
+
+    public Instant getResponseDateTime() {
+        return responseDateTime;
+    }
+
+    public void setResponseDateTime(Instant responseDateTime) {
+        this.responseDateTime = responseDateTime;
+    }
+
+
+    //
+    // Factory Methods
+    //
+
+    public static EnrichedEntity fromEnrichmentRequest(EnrichmentRequest enrichmentRequest){
+        EnrichedEntity enrichedEntity = new EnrichedEntity();
+        enrichedEntity.setZipCode(enrichmentRequest.getZipCode());
+        enrichedEntity.setEnrichmentStatus(EnrichedEntity.EnrichedEntityStatus.SUBMITTED);
+        enrichedEntity.setSubmissionDateTime(Instant.now());
+        return enrichedEntity;
+    }
+
+    // Mutable methods
+
+    public EnrichedEntity markEnrichmentFailed(){
+        this.setEnrichmentStatus(FAILURE);
+        this.setEnrichmentDateTime(Instant.now());
+        return this;
+    }
+
+    public EnrichedEntity markEnrichmentSuccess(List<String> cityStates){
+        this.setEnrichmentStatus(SUCCESS);
+        this.setCityStates(cityStates);
+        this.setEnrichmentDateTime(Instant.now());
+        return this;
+    }
+
+    public EnrichedEntity markEnrichmentResponseSent(){
+        this.setResponseDateTime(Instant.now());
+        return this;
+    }
+
+    //
+    // HashCode, Equals, ToString
+    //
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,31 +150,26 @@ public class EnrichedEntity {
         return Objects.equals(id, that.id) &&
                 Objects.equals(cityStates, that.cityStates) &&
                 Objects.equals(zipCode, that.zipCode) &&
-                enrichmentStatus == that.enrichmentStatus;
+                enrichmentStatus == that.enrichmentStatus &&
+                Objects.equals(submissionDateTime, that.submissionDateTime) &&
+                Objects.equals(enrichmentDateTime, that.enrichmentDateTime) &&
+                Objects.equals(responseDateTime, that.responseDateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cityStates, zipCode, enrichmentStatus);
+        return Objects.hash(id, cityStates, zipCode, enrichmentStatus, submissionDateTime, enrichmentDateTime, responseDateTime);
     }
 
     @Override
     public String toString() {
         return "EnrichedEntity{" +
                 "id=" + id +
-                ", cityStates=" + cityStates +
-                ", enrichmentStatus=" + enrichmentStatus +
                 ", zipCode=" + zipCode +
+                ", enrichmentStatus=" + enrichmentStatus +
+                ", submissionDateTime=" + submissionDateTime +
+                ", enrichmentDateTime=" + enrichmentDateTime +
+                ", responseDateTime=" + responseDateTime +
                 '}';
     }
-
-
-    public List<String> getCityStates() {
-        return cityStates;
-    }
-
-    public void setCityStates(List<String> cityStates) {
-        this.cityStates = cityStates;
-    }
-
 }

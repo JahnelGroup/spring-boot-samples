@@ -2,6 +2,9 @@ package com.example.api.enriched;
 
 import java.util.Objects;
 
+/**
+ * Represents a work request to lookup a ZipCode.
+ */
 public class EnrichmentRequest {
 
     private Integer zipCode;

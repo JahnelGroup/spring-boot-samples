@@ -1,18 +1,24 @@
-package com.example.api.enriched;
+package com.example.api.enriched.service;
 
+import com.example.api.enriched.EnrichedEntity;
+import com.example.api.enriched.EnrichedEntityRepo;
+import com.example.api.enriched.EnrichmentRequest;
 import com.example.api.smartystreets.SmartyStreetsService;
 import com.example.api.smartystreets.resp.CityState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Component
+/**
+ * Default implementation of EnrichmentService.
+ */
+@Service
 public class DefaultEnrichmentService implements EnrichmentService {
 
     private Logger logger = LoggerFactory.getLogger(DefaultEnrichmentService.class);
@@ -25,9 +31,7 @@ public class DefaultEnrichmentService implements EnrichmentService {
 
     @Override
     public EnrichedEntity createRequest(EnrichmentRequest enrichmentRequest) {
-        EnrichedEntity enrichedEntity = new EnrichedEntity();
-        enrichedEntity.setZipCode(enrichmentRequest.getZipCode());
-        enrichedEntity.setEnrichmentStatus(EnrichedEntity.EnrichedEntityStatus.SUBMITTED);
+        EnrichedEntity enrichedEntity = EnrichedEntity.fromEnrichmentRequest(enrichmentRequest);
         enrichedEntityRepo.save(enrichedEntity);
         logger.info("Created request = {}", enrichmentRequest);
         return enrichedEntity;
@@ -45,14 +49,12 @@ public class DefaultEnrichmentService implements EnrichmentService {
             cityStates = smartyStreetsService.fetchCityStatesByZipCode(enrichedEntity.getZipCode());
         }catch(Exception e){
             logger.error("Failed to enrich from SmartyStreets", e);
-            // TODO: We should be saving the reason for the failure on the EnrichedEntity
         }
 
         if( cityStates == null || cityStates.isEmpty() ){
-            enrichedEntity.setEnrichmentStatus(EnrichedEntity.EnrichedEntityStatus.FAILURE);
+            enrichedEntity.markEnrichmentFailed();
         }else{
-            enrichedEntity.setEnrichmentStatus(EnrichedEntity.EnrichedEntityStatus.SUCCESS);
-            enrichedEntity.setCityStates(cityStates.stream().map(CityState::getCity).collect(Collectors.toList()));
+            enrichedEntity.markEnrichmentSuccess(cityStates.stream().map(CityState::getCity).collect(Collectors.toList()));
         }
 
         logger.info("Async enrichment - done = {}", enrichedEntity);
