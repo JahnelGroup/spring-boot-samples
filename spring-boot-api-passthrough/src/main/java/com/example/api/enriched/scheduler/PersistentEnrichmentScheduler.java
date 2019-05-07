@@ -36,10 +36,10 @@ public class PersistentEnrichmentScheduler implements EnrichmentScheduler {
     }
 
     /**
-     * Poll for enrichment work (SUBMITTED by submissionDateTime ASC) every 5 seconds.
+     * Poll for enrichment work (SUBMITTED by submissionDateTime ASC) every 10 seconds.
      */
     @Override
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 10000)
     public void pollForSubmitted() {
         enrichedEntityRepo.pollForSubmitted(PageRequest.of(0, 5))
                 .forEach(enrichmentService::doAsyncEnrichment);
@@ -47,10 +47,10 @@ public class PersistentEnrichmentScheduler implements EnrichmentScheduler {
 
 
     /**
-     * Poll for completed work (!SUBMITTED and responseDateTime IS NULL order by enrichmentDateTime ASC) every 10 seconds.
+     * Poll for completed work (!SUBMITTED and responseDateTime IS NULL order by enrichmentDateTime ASC) every 5 seconds.
      */
     @Override
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 5000)
     public void pollForCompleted() {
         List<EnrichedEntity> completed = enrichedEntityRepo.pollForCompleted(PageRequest.of(0, 5));
         for(EnrichedEntity e : completed){
