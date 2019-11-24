@@ -36,7 +36,7 @@ class RequestContextApplication{
 	}
 
 	/**
-	 * Registers a request filter to generate
+	 * Registers a request filter to handle request ID processing.
 	 */
 	@Bean
 	fun customRequestContextFilter() = object : OncePerRequestFilter() {
