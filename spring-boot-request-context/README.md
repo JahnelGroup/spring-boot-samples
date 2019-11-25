@@ -37,7 +37,7 @@ Hello Steven
 Notice how a response header was set `request-id: FAA61773FC7C4DFD8C11832F6A1BFD29`. If we inspect the log statement you see it was printed there as well:
 
 ```bash
-13:50:15.999 [http-nio-8080-exec-9] [request-id=FAA61773FC7C4DFD8C11832F6A1BFD29] INFO  c.j.r.RequestContextApplication$$EnhancerBySpringCGLIB$$a132cd9a - Echoing back 'Hello Steven'
+13:50:15.999 [http-nio-8080-exec-9] [name=Steven, request-id=FAA61773FC7C4DFD8C11832F6A1BFD29] INFO  c.j.r.RequestContextApplication$$EnhancerBySpringCGLIB$$a132cd9a - Echoing back 'Hello Steven'
 ```
 
 You can also have the request set this identifier if you're chaining calls together that are related and want to share the ID. Here I'm setting the header `request-id:123` which will also be echo'd back out to me. 
@@ -64,6 +64,6 @@ Hello Steven
 The log statement reflects this accordingly:
 
 ```bash
-13:50:15.123 [http-nio-8080-exec-9] [request-id=123] INFO  c.j.r.RequestContextApplication$$EnhancerBySpringCGLIB$$a132cd9a - Echoing back 'Hello Steven'
+13:50:15.123 [http-nio-8080-exec-9] [name=Steven, request-id=123] INFO  c.j.r.RequestContextApplication$$EnhancerBySpringCGLIB$$a132cd9a - Echoing back 'Hello Steven'
 ```
 

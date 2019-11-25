@@ -17,46 +17,25 @@ import javax.servlet.http.HttpServletResponse
 
 @RestController
 @SpringBootApplication
-class RequestContextApplication{
+class RequestContextApplication(var webRequestContext: WebRequestContext){
 	private val logger = LoggerFactory.getLogger(javaClass)
 
 	/**
-	 * End-point to demonstrate how the MDC is printed with the requestId provided by
-	 * the requestContextFilter below.
+	 * End-point to demonstrate how the MDC is printed. The webRequestId is handled in the
+	 * WebRequestContextFilter and the name is handled right here in this function as an example
+	 * of setting context throughout the application.
 	 */
 	@GetMapping("/hello")
 	fun hello(@RequestParam name: String): String {
 		var resp = "Hello $name"
 
-		// This will print a log statement with the MDC, example:
-		// 		13:50:15.999 [http-nio-8080-exec-9] [request-id=FAA61773FC7C4DFD8C11832F6A1BFD29] INFO  c.j.r.RequestContextApplication$$EnhancerBySpringCGLIB$$a132cd9a - Echoing back 'Hello Steven'
+		// This is just an example of setting some type of context throughout the application.
+		webRequestContext.setName(name)
+
+		// This log statement will be enriched with webRequestId and name.
 		logger.info("Echoing back '$resp'")
 
 		return resp
-	}
-
-	/**
-	 * Registers a request filter to handle request ID processing.
-	 */
-	@Bean
-	fun customRequestContextFilter() = object : OncePerRequestFilter() {
-		var tokenName = "request-id"
-		var token: String? = null
-		override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
-			try{
-				// Request ID
-				token = if( !StringUtils.isEmpty(request.getHeader(tokenName)) ){
-					request.getHeader(tokenName)
-				}else{
-					UUID.randomUUID().toString().toUpperCase().replace("-","")
-				}
-				MDC.put(tokenName, token)
-				response.addHeader(tokenName, token)
-				filterChain.doFilter(request, response)
-			} finally {
-				MDC.remove(tokenName)
-			}
-		}
 	}
 }
 
